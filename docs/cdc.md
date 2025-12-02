@@ -15,7 +15,7 @@ Suite à des échanges entre professeurs de la section, 2 besoins principaux ém
 - faire évoluer cette base de données pour que les étudiants puissent eux-mêmes saisir les informations nécessaires à l'élaboration de leur fiche de validation de stage,
 - proposer une API-Rest concernant les ressources liées aux stages afin d'élargir les applications clientes potentielles (web, mobile)
 
-![Schéma application cliente et API-Rest](images/schema_client_apirest.png)
+![Schéma application cliente et API-Rest](images/schema_client_apirest.png)  
 Une application cliente mobile sous Android fera l'objet d'un développement dans le cadre du 3ème atelier de professionnalisation.
 
 ## Domaine de gestion des stages
@@ -36,11 +36,11 @@ La section sauvegarde aussi les coordonnées des contacts d’une organisation. 
 Les informations sur l’étudiant, l’organisation, les contacts et le stage sont essentiellement collectées via la fiche de validation de stage. 
 
 ## Exemple de fiche de validation de stage
-L'exemple fourni ci-après va permettre de faire le point sur les données déjà présentes dans la base existante et les nouvelles données.
+L'exemple fourni ci-après va permettre de faire le point sur les données déjà présentes dans la base existante et les nouvelles données.  
 ![Exemple fiche de validation](images/fiche_validation_exemple.png)
 
 ## Exigences sur les évolutions de la base de données
-Les évolutions de la structure de la base de données doivent permettre d'établir la fiche de validation de stage des étudiants de la section STS-SIO.
+Les évolutions de la structure de la base de données doivent permettre d'établir la fiche de validation de stage des étudiants de la section BTS SIO.
 
 Ces évolutions prendront en compte les besoins en sécurité des données :
 - intégrité d'entité,
@@ -49,7 +49,7 @@ Ces évolutions prendront en compte les besoins en sécurité des données :
 
 Ainsi que les bonnes pratiques sur la structure d'une base de données [ici](db-guidelines.md).
 
-Ces évolutions doivent être accompagnées d'une mise à jour de la [fiche de registre](ap32_fiche_registre_gestion_stages.xlsx) pour le traitement Gestion des stages de la section STS-SIO. Le délégué à la protection des données opérera en effet ces rectifications au cours du mois de janvier.
+Ces évolutions doivent être accompagnées d'une mise à jour de la [fiche de registre](ap32_fiche_registre_gestion_stages.xlsx) pour le traitement Gestion des stages de la section BTS SIO. Le délégué à la protection des données opérera en effet ces rectifications au cours du mois de janvier.
 On doit apporter un soin particulier au recensement exhaustif de toutes les données à caractère personnel, et celles sensibles, ainsi qu'à leur durée de conservation et aux mesures de protection de ces données.
 On proposera des solutions sur le devenir de ces données au terme de la durée limite de conservation.
 
