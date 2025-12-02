@@ -5,7 +5,7 @@ Le lycée VHB prépare des étudiants au BTS SIO – Services Informatiques aux 
 - option A - SISR - Solutions d'Infrastructure Systèmes et Réseaux, 
 - option B - SLAM - Solutions Logicielles Applications Métiers. 
 
-Afin de valider leur BTS, les étudiants de la section TS SIO effectuent un stage de 6 semaines par année.
+Afin de valider leur BTS, les étudiants de la section BTS SIO effectuent un stage de 6 semaines par année.
 Pour faciliter la mise en contact des étudiants avec des organisations connaissant la formation et ayant déjà eu l'occasion d'accueillir des stagiaires, les données liées aux stages sont conservées avec des mises à jour de l'existence ou non des organisations, et de la présence ou non des contacts dans une organisation donnée. Elle peut aussi servir à rechercher des professionnels de l'informatique pour participer aux commissions de l'épreuve E5 - Support et mise à disposition des services informatiques.
 
 Actuellement, cette base de données est utilisée par l'application web HistoStages accessible ici. Elle est à destination des étudiants et professeurs de la section, ces derniers étant authentifiés via leur adresse mail sur le domaine lycee-basch.fr.
