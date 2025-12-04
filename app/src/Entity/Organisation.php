@@ -28,7 +28,7 @@ class Organisation
     #[ORM\Column(length: 50)]
     private ?string $tel = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $fax = null;
 
     #[ORM\Column(length: 100, nullable: true)]
