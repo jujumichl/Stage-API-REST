@@ -11,7 +11,7 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length: 8)]
-    private ?int $numero = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
@@ -37,9 +37,12 @@ class Organisation
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $urlSiteWeb = null;
 
-    public function getNumero(): ?int
+    #[ORM\Column(length: 100)]
+    private ?string $infoAssurance = null;
+
+    public function getId(): ?int
     {
-        return $this->numero;
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -134,6 +137,18 @@ class Organisation
     public function setUrlSiteWeb(?string $urlSiteWeb): static
     {
         $this->urlSiteWeb = $urlSiteWeb;
+
+        return $this;
+    }
+
+    public function getInfoAssurance(): ?string
+    {
+        return $this->infoAssurance;
+    }
+
+    public function setInfoAssurance(string $infoAssurance): static
+    {
+        $this->infoAssurance = $infoAssurance;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EtudiantRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
@@ -11,7 +12,7 @@ class Etudiant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:8)]
-    private ?int $numero = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
@@ -25,9 +26,21 @@ class Etudiant
     #[ORM\Column(length:4)]
     private ?int $anneePromo = null;
 
-    public function getNumero(): ?int
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTime $dateNaissance = null;
+
+    #[ORM\Column(length: 6)]
+    private ?string $codePostal = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $rue = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $ville = null;
+
+    public function getId(): ?int
     {
-        return $this->numero;
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -74,6 +87,54 @@ class Etudiant
     public function setAnneePromo(int $anneePromo): static
     {
         $this->anneePromo = $anneePromo;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?\DateTime
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(\DateTime $dateNaissance): static
+    {
+        $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    public function setRue(string $rue): static
+    {
+        $this->rue = $rue;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }
