@@ -11,7 +11,7 @@ class Specialite
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:'NONE')]
     #[ORM\Column(length:1)]
-    private ?string $ref = null;
+    private ?string $id = null;
 
     #[ORM\Column(length: 4, nullable: true)]
     private ?string $sigle = null;
@@ -19,9 +19,9 @@ class Specialite
     #[ORM\Column(length: 60)]
     private ?string $intitule = null;
 
-    public function getRef(): ?string
+    public function getId(): ?string
     {
-        return $this->ref;
+        return $this->id;
     }
 
     public function getSigle(): ?string
