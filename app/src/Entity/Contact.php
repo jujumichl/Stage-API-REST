@@ -31,6 +31,10 @@ class Contact
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $fonction = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Organisation $numeroOrganisation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +108,18 @@ class Contact
     public function setFonction(?string $fonction): static
     {
         $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    public function getNumeroOrganisation(): ?Organisation
+    {
+        return $this->numeroOrganisation;
+    }
+
+    public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
+    {
+        $this->numeroOrganisation = $numeroOrganisation;
 
         return $this;
     }

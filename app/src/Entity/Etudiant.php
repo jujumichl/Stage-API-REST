@@ -38,6 +38,10 @@ class Etudiant
     #[ORM\Column(length: 100)]
     private ?string $ville = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Specialite $refSpe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +139,18 @@ class Etudiant
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getRefSpe(): ?Specialite
+    {
+        return $this->refSpe;
+    }
+
+    public function setRefSpe(?Specialite $refSpe): static
+    {
+        $this->refSpe = $refSpe;
 
         return $this;
     }

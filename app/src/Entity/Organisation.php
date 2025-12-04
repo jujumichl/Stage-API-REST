@@ -40,6 +40,10 @@ class Organisation
     #[ORM\Column(length: 100)]
     private ?string $infoAssurance = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $idCategorie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +153,18 @@ class Organisation
     public function setInfoAssurance(string $infoAssurance): static
     {
         $this->infoAssurance = $infoAssurance;
+
+        return $this;
+    }
+
+    public function getIdCategorie(): ?Categorie
+    {
+        return $this->idCategorie;
+    }
+
+    public function setIdCategorie(?Categorie $idCategorie): static
+    {
+        $this->idCategorie = $idCategorie;
 
         return $this;
     }
