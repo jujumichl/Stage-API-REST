@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Referentiel;
+use App\Entity\Bloc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Referentiel>
+ * @extends ServiceEntityRepository<Bloc>
  */
-class ReferentielRepository extends ServiceEntityRepository
+class BlocRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Referentiel::class);
+        parent::__construct($registry, Bloc::class);
     }
 
 //    /**
-//     * @return Referentiel[] Returns an array of Referentiel objects
+//     * @return Bloc[] Returns an array of Bloc objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class ReferentielRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Referentiel
+//    public function findOneBySomeField($value): ?Bloc
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

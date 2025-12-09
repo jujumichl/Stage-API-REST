@@ -16,8 +16,12 @@ class Organisation
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $adresse = null;
+    private ?string $rue = null;
 
     #[ORM\Column(length: 6, nullable: true)]
     private ?string $codePostal = null;
@@ -28,21 +32,12 @@ class Organisation
     #[ORM\Column(length: 50)]
     private ?string $tel = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $fax = null;
-
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $urlSiteWeb = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $infoAssurance = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Categorie $idCategorie = null;
 
     public function getId(): ?int
     {
@@ -63,12 +58,12 @@ class Organisation
 
     public function getAdresse(): ?string
     {
-        return $this->adresse;
+        return $this->rue;
     }
 
-    public function setAdresse(?string $adresse): static
+    public function setAdresse(?string $rue): static
     {
-        $this->adresse = $adresse;
+        $this->rue = $rue;
 
         return $this;
     }
@@ -109,17 +104,6 @@ class Organisation
         return $this;
     }
 
-    public function getFax(): ?string
-    {
-        return $this->fax;
-    }
-
-    public function setFax(?string $fax): static
-    {
-        $this->fax = $fax;
-
-        return $this;
-    }
 
     public function getEmail(): ?string
     {
@@ -145,26 +129,14 @@ class Organisation
         return $this;
     }
 
-    public function getInfoAssurance(): ?string
-    {
-        return $this->infoAssurance;
-    }
-
-    public function setInfoAssurance(string $infoAssurance): static
-    {
-        $this->infoAssurance = $infoAssurance;
-
-        return $this;
-    }
-
     public function getIdCategorie(): ?Categorie
     {
-        return $this->idCategorie;
+        return $this->categorie;
     }
 
     public function setIdCategorie(?Categorie $idCategorie): static
     {
-        $this->idCategorie = $idCategorie;
+        $this->categorie = $idCategorie;
 
         return $this;
     }

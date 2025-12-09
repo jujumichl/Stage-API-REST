@@ -26,21 +26,25 @@ class Etudiant
     #[ORM\Column(length:4)]
     private ?int $anneePromo = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $dateNaissance = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Specialite $specialite = null;
+
+    
+    #[ORM\Column(length: 100)]
+    private ?string $mdp = null;
+    
+    #[ORM\Column(length: 100)]
+    private ?string $rue = null;
 
     #[ORM\Column(length: 6)]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $rue = null;
-
-    #[ORM\Column(length: 100)]
     private ?string $ville = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Specialite $refSpe = null;
+
+
 
     public function getId(): ?int
     {
@@ -95,17 +99,6 @@ class Etudiant
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTime
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(\DateTime $dateNaissance): static
-    {
-        $this->dateNaissance = $dateNaissance;
-
-        return $this;
-    }
 
     public function getCodePostal(): ?string
     {
@@ -145,12 +138,24 @@ class Etudiant
 
     public function getRefSpe(): ?Specialite
     {
-        return $this->refSpe;
+        return $this->specialite;
     }
 
-    public function setRefSpe(?Specialite $refSpe): static
+    public function setRefSpe(?Specialite $specialite_id): static
     {
-        $this->refSpe = $refSpe;
+        $this->specialite = $specialite_id;
+
+        return $this;
+    }
+
+    public function getMdp(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function setMdp(string $mdp): static
+    {
+        $this->mdp = $mdp;
 
         return $this;
     }

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\PeriodestageRepository;
+use App\Repository\PeriodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PeriodestageRepository::class)]
-class Periodestage
+#[ORM\Entity(repositoryClass: PeriodeRepository::class)]
+class Periode
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

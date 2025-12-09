@@ -16,8 +16,13 @@ class Stage
     #[ORM\Column(length:8)]
     private ?int $id = null;
 
-    #[ORM\Column(length:4, nullable: true)]
-    private ?int $annee = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Etudiant $etudiant = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Periode $periode = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $descriptifMission = null;
@@ -27,43 +32,13 @@ class Stage
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etudiant $numeroEtudiant = null;
+    private ?Organisation $organisation = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Periodestage $idPeriodeStage = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Organisation $numeroOrganisation = null;
-
-    /**
-     * @var Collection<int, Referentiel>
-     */
-    #[ORM\ManyToMany(targetEntity: Referentiel::class, inversedBy: 'idStage')]
-    private Collection $idRef;
-
-    public function __construct()
-    {
-        $this->idRef = new ArrayCollection();
-    }
 
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAnnee(): ?int
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(?int $annee): static
-    {
-        $this->annee = $annee;
-
-        return $this;
     }
 
     public function getDescriptifMission(): ?string
@@ -92,60 +67,36 @@ class Stage
 
     public function getNumeroEtudiant(): ?Etudiant
     {
-        return $this->numeroEtudiant;
+        return $this->etudiant;
     }
 
     public function setNumeroEtudiant(?Etudiant $numeroEtudiant): static
     {
-        $this->numeroEtudiant = $numeroEtudiant;
+        $this->etudiant = $numeroEtudiant;
 
         return $this;
     }
 
-    public function getIdPeriodeStage(): ?Periodestage
+    public function getIdPeriodeStage(): ?Periode
     {
-        return $this->idPeriodeStage;
+        return $this->periode;
     }
 
-    public function setIdPeriodeStage(?Periodestage $idPeriodeStage): static
+    public function setIdPeriodeStage(?Periode $idPeriodeStage): static
     {
-        $this->idPeriodeStage = $idPeriodeStage;
+        $this->periode = $idPeriodeStage;
 
         return $this;
     }
 
     public function getNumeroOrganisation(): ?Organisation
     {
-        return $this->numeroOrganisation;
+        return $this->organisation;
     }
 
     public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
     {
-        $this->numeroOrganisation = $numeroOrganisation;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Referentiel>
-     */
-    public function getIdRef(): Collection
-    {
-        return $this->idRef;
-    }
-
-    public function addIdRef(Referentiel $idRef): static
-    {
-        if (!$this->idRef->contains($idRef)) {
-            $this->idRef->add($idRef);
-        }
-
-        return $this;
-    }
-
-    public function removeIdRef(Referentiel $idRef): static
-    {
-        $this->idRef->removeElement($idRef);
+        $this->organisation = $numeroOrganisation;
 
         return $this;
     }

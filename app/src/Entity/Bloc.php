@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ReferentielRepository;
+use App\Repository\BlocRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ReferentielRepository::class)]
-class Referentiel
+#[ORM\Entity(repositoryClass: BlocRepository::class)]
+class Bloc
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,7 +16,7 @@ class Referentiel
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    private ?string $code = null;
 
     /**
      * @var Collection<int, Stage>
@@ -34,14 +34,14 @@ class Referentiel
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getCode(): ?string
     {
-        return $this->libelle;
+        return $this->code;
     }
 
-    public function setLibelle(string $libelle): static
+    public function setCode(string $code): static
     {
-        $this->libelle = $libelle;
+        $this->code = $code;
 
         return $this;
     }
