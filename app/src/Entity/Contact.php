@@ -119,7 +119,7 @@ class Contact
         return $this->organisation;
     }
 
-    public function setOrganisation(?Organisation $organisation): static
+    public function setNumeroOrganisation(?Organisation $organisation): static
     {
         $this->organisation = $organisation;
 

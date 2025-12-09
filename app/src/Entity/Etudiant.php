@@ -30,17 +30,21 @@ class Etudiant
     #[ORM\JoinColumn(nullable: false)]
     private ?Specialite $specialite = null;
 
-    #[ORM\Column(length: 255)]
+    
+    #[ORM\Column(length: 100)]
     private ?string $mdp = null;
-
+    
     #[ORM\Column(length: 100)]
     private ?string $rue = null;
-    
+
     #[ORM\Column(length: 6)]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100)]
     private ?string $ville = null;
+
+
+
 
     public function getId(): ?int
     {
@@ -95,6 +99,7 @@ class Etudiant
         return $this;
     }
 
+
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
@@ -136,9 +141,9 @@ class Etudiant
         return $this->specialite;
     }
 
-    public function setSpecialite(?Specialite $specialite): static
+    public function setRefSpe(?Specialite $specialite_id): static
     {
-        $this->specialite = $specialite;
+        $this->specialite = $specialite_id;
 
         return $this;
     }

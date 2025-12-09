@@ -38,6 +38,7 @@ class Organisation
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $urlSiteWeb = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,7 +61,7 @@ class Organisation
         return $this->rue;
     }
 
-    public function setRue(?string $rue): static
+    public function setAdresse(?string $rue): static
     {
         $this->rue = $rue;
 
@@ -103,6 +104,7 @@ class Organisation
         return $this;
     }
 
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -127,7 +129,7 @@ class Organisation
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getIdCategorie(): ?Categorie
     {
         return $this->categorie;
     }
