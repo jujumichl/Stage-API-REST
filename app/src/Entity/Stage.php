@@ -24,7 +24,7 @@ class Stage
     #[ORM\JoinColumn(nullable: false)]
     private ?Periode $periode = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptifMissions = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
