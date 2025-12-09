@@ -15,7 +15,7 @@ class Periode
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTime $dateDeb = null;
+    private ?\DateTime $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $dateFin = null;
@@ -28,14 +28,14 @@ class Periode
         return $this->id;
     }
 
-    public function getDateDeb(): ?\DateTime
+    public function getDateDebut(): ?\DateTime
     {
-        return $this->dateDeb;
+        return $this->dateDebut;
     }
 
-    public function setDateDeb(?\DateTime $dateDeb): static
+    public function setDateDebut(?\DateTime $dateDebut): static
     {
-        $this->dateDeb = $dateDeb;
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
