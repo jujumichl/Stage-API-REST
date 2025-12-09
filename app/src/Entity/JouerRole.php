@@ -15,7 +15,7 @@ class JouerRole
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Contact $idContact = null;
+    private ?Contact $contact = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne]
@@ -47,14 +47,14 @@ class JouerRole
         return $this;
     }
 
-    public function getIdContact(): ?Contact
+    public function getContact(): ?Contact
     {
-        return $this->idContact;
+        return $this->contact;
     }
 
-    public function setIdContact(?Contact $idContact): static
+    public function setContact(?Contact $contact): static
     {
-        $this->idContact = $idContact;
+        $this->contact = $contact;
 
         return $this;
     }
