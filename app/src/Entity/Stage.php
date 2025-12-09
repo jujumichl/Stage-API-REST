@@ -25,7 +25,7 @@ class Stage
     private ?Periode $periode = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $descriptifMission = null;
+    private ?string $descriptifMissions = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $moyens = null;
@@ -41,14 +41,14 @@ class Stage
         return $this->id;
     }
 
-    public function getDescriptifMission(): ?string
+    public function getDescriptifMissions(): ?string
     {
-        return $this->descriptifMission;
+        return $this->descriptifMissions;
     }
 
-    public function setDescriptifMission(string $descriptifMission): static
+    public function setDescriptifMissions(string $descriptifMissions): static
     {
-        $this->descriptifMission = $descriptifMission;
+        $this->descriptifMissions = $descriptifMissions;
 
         return $this;
     }
