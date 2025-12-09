@@ -11,7 +11,7 @@ class JouerRole
     #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Stage $idStage = null;
+    private ?Stage $stage = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -23,14 +23,14 @@ class JouerRole
     private ?Role $idRole = null;
 
 
-    public function getIdStage(): ?Stage
+    public function getStage(): ?Stage
     {
-        return $this->idStage;
+        return $this->stage;
     }
 
-    public function setIdStage(?Stage $idStage): static
+    public function setStage(?Stage $stage): static
     {
-        $this->idStage = $idStage;
+        $this->stage = $stage;
 
         return $this;
     }
