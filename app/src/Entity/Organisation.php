@@ -29,7 +29,7 @@ class Organisation
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
