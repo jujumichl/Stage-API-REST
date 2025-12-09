@@ -27,7 +27,7 @@ class Stage
     #[ORM\Column(type: Types::TEXT)]
     private ?string $descriptifMissions = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $moyens = null;
 
     #[ORM\ManyToOne]
