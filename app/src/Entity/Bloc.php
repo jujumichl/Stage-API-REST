@@ -18,16 +18,13 @@ class Bloc
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
-    /**
-     * @var Collection<int, Stage>
-     */
-    #[ORM\ManyToMany(targetEntity: Stage::class, mappedBy: 'idRef')]
-    private Collection $idStage;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Specialite $specialite = null;
 
-    public function __construct()
-    {
-        $this->idStage = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $intitule = null;
+
 
     public function getId(): ?int
     {
@@ -46,30 +43,28 @@ class Bloc
         return $this;
     }
 
-    /**
-     * @return Collection<int, Stage>
-     */
-    public function getIdStage(): Collection
+    public function getSpecialite(): ?Specialite
     {
-        return $this->idStage;
+        return $this->specialite;
     }
 
-    public function addIdStage(Stage $idStage): static
+    public function setSpecialite(?Specialite $specialite): static
     {
-        if (!$this->idStage->contains($idStage)) {
-            $this->idStage->add($idStage);
-            $idStage->addIdRef($this);
-        }
+        $this->specialite = $specialite;
 
         return $this;
     }
 
-    public function removeIdStage(Stage $idStage): static
+    public function getIntitule(): ?string
     {
-        if ($this->idStage->removeElement($idStage)) {
-            $idStage->removeIdRef($this);
-        }
+        return $this->intitule;
+    }
+
+    public function setIntitule(string $intitule): static
+    {
+        $this->intitule = $intitule;
 
         return $this;
     }
+
 }

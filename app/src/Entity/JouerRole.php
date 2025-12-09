@@ -13,14 +13,14 @@ class JouerRole
     #[ORM\JoinColumn(nullable: false)]
     private ?Stage $idStage = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Contact $idContact = null;
+
     #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Role $idRole = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Contact $idContact = null;
 
 
     public function getIdStage(): ?Stage
