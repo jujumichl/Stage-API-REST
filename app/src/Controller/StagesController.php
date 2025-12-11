@@ -29,7 +29,7 @@ final class StagesController extends AbstractController
     }
 
     #[Route('/stages/{id}', name: 'stages_get_id', methods: ['GET'])]
-    public function getDetailFraisForfait(string $id, StageRepository $unStageRepository, SerializerInterface $unSerialiseur): JsonResponse
+    public function getDetailStage(string $id, StageRepository $unStageRepository, SerializerInterface $unSerialiseur): JsonResponse
     {
         $unStage = $unStageRepository->find($id);
         if ($unStage === null) {
@@ -45,7 +45,7 @@ final class StagesController extends AbstractController
     }
 
     #[Route('/stages', name: 'stages_post', methods: ['POST'])]
-    public function createFraisForfait(Request $request, StageRepository $unstageRepository, SerializerInterface $unSerialiseur,
+    public function createStage(Request $request, StageRepository $unstageRepository, SerializerInterface $unSerialiseur,
     EntityManagerInterface $em, URLGeneratorInterface $unUrlGenerateur)
     {
         $contenu = $request->getContent();
