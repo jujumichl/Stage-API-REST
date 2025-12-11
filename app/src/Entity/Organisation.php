@@ -61,7 +61,7 @@ class Organisation
         return $this->rue;
     }
 
-    public function setAdresse(?string $rue): static
+    public function setRue(?string $rue): static
     {
         $this->rue = $rue;
 
@@ -129,7 +129,7 @@ class Organisation
         return $this;
     }
 
-    public function getIdCategorie(): ?Categorie
+    public function getCategorie(): ?Categorie
     {
         return $this->categorie;
     }

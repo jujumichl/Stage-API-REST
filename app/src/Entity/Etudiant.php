@@ -141,7 +141,7 @@ class Etudiant
         return $this->specialite;
     }
 
-    public function setRefSpe(?Specialite $specialite_id): static
+    public function setSpecialite(?Specialite $specialite_id): static
     {
         $this->specialite = $specialite_id;
 
