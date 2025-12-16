@@ -41,13 +41,13 @@ class Stage
     /**
      * @var Collection<int, Competence>
      */
-    #[ORM\ManyToMany(targetEntity: Competence::class)]
+    /* #[ORM\ManyToMany(targetEntity: Competence::class)]
     private Collection $competence;
 
     public function __construct()
     {
         $this->competence = new ArrayCollection();
-    }
+    } */
 
 
 
@@ -80,14 +80,14 @@ class Stage
         return $this;
     }
 
-    public function getNumeroEtudiant(): ?Etudiant
+    public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
-    public function setNumeroEtudiant(?Etudiant $numeroEtudiant): static
+    public function setEtudiant(?Etudiant $Etudiant): static
     {
-        $this->etudiant = $numeroEtudiant;
+        $this->etudiant = $Etudiant;
 
         return $this;
     }
@@ -119,7 +119,7 @@ class Stage
     /**
      * @return Collection<int, Competence>
      */
-    public function getCompetence(): Collection
+    /* public function getCompetence(): Collection
     {
         return $this->competence;
     }
@@ -138,6 +138,6 @@ class Stage
         $this->competence->removeElement($competence);
 
         return $this;
-    }
+    } */
 
 }

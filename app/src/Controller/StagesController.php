@@ -19,9 +19,9 @@ final class StagesController extends AbstractController
      * Get tous les stages
      */
     #[Route('/stages', name: 'stages_get', methods: ['GET'])]
-    public function index(StageRepository $unStage,SerializerInterface $unSerialiseur): JsonResponse
+    public function index(StageRepository $unStageRepository,SerializerInterface $unSerialiseur): JsonResponse
     {
-        $lesStages = $unStage->findAll();
+        $lesStages = $unStageRepository->findAll();
         $result = [
             'message' => 'OK',
             'data' => $lesStages
@@ -66,7 +66,7 @@ final class StagesController extends AbstractController
         $seeContent= [
             $unStage->getDescriptifMissions(),
             $unStage->getMoyens(),
-            $unStage->getNumeroEtudiant(),
+            $unStage->getEtudiant(),
             $unStage->getNumeroOrganisation(),
             $unStage->getIdPeriodeStage()
         ];
