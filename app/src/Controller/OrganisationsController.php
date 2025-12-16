@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 final class OrganisationsController extends AbstractController
@@ -37,16 +39,23 @@ final class OrganisationsController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/organisations/{id}', name: 'app_organisation_by_id', methods: ['GET'])]
-    public function getById(string $id, OrganisationRepository $unRepository, SerializerInterface $unSerialiseur): JsonResponse
+    public function getById(string $id, OrganisationRepository $unRepository, SerializerInterface $unSerialiseur, ValidatorInterface $unValidateur): JsonResponse
     {
+        $constraints = [
+            new Assert\NotBlank(),
+            new Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"]),
+        ];
         // Vérification d'un id string 
-        if (!is_numeric($id)) {
-            $result = [
-                'message' => 'Id de ressource invalide',
-                'data' => null
-            ];
-            $serializedResult = $unSerialiseur->serialize($result, 'json');
-            return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
+        $errors = $unValidateur->validate($id, $constraints);
+        if ($errors->count() > 0) { // Vérifie s'il y a des erreurs de validation
+            $messages = [];
+            foreach ($errors as $error) {
+                $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
+            }
+            return new JsonResponse([
+                'message' => 'Données erronées',
+                'errors' => $messages
+            ], JsonResponse::HTTP_BAD_REQUEST);
         }
         $uneOrganisation = $unRepository->find($id); // Récupère l'organisation par son ID
         if (!$uneOrganisation) {
@@ -71,15 +80,22 @@ final class OrganisationsController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/organisations/{id}', name: 'app_organisation_maj', methods: ['PUT'])]
-    public function update(string $id, Request $request, SerializerInterface $unSerialiseur, EntityManagerInterface $em, URLGeneratorInterface $unUrlGenerateur)
+    public function update(string $id, Request $request, SerializerInterface $unSerialiseur, EntityManagerInterface $em, URLGeneratorInterface $unUrlGenerateur, ValidatorInterface $unValidateur)
     {
-        if (!is_numeric($id)) {
-            $result = [
-                'message' => 'ID ressource inexistante',
-                'data' => null
-            ];
-            $serializedResult = $unSerialiseur->serialize($result, 'json');
-            return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
+        // Vérification d'un id string 
+        $errors = $unValidateur->validate($id, [
+            new Assert\NotBlank(),
+            new Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"]),
+        ]);
+        if ($errors->count() > 0) { // Vérifie s'il y a des erreurs de validation
+            $messages = [];
+            foreach ($errors as $error) {
+                $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
+            }
+            return new JsonResponse([
+                'message' => 'Données erronées',
+                'errors' => $messages
+            ], JsonResponse::HTTP_BAD_REQUEST);
         }
         $uneOrganisation = $em->getRepository(Organisation::class)->find($id); // Récupère l'organisation par son ID
         if (!$uneOrganisation) {

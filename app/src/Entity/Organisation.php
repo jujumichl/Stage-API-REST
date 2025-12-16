@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\OrganisationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints As Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 class Organisation
 {
+    #[Assert\NotBlank()]
+    #[Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length: 8)]
