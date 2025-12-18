@@ -3,15 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Stage;
+use App\Entity\Organisation;
+use App\Entity\Etudiant;
+use App\Entity\Periode;
+use App\Repository\StageRepository;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use App\Repository\StageRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 final class StagesController extends AbstractController
 {
@@ -19,7 +26,7 @@ final class StagesController extends AbstractController
      * Get tous les stages
      */
     #[Route('/stages', name: 'stages_get', methods: ['GET'])]
-    public function index(StageRepository $unStageRepository,SerializerInterface $unSerialiseur): JsonResponse
+    public function index(StageRepository $unStageRepository, SerializerInterface $unSerialiseur): JsonResponse
     {
         $lesStages = $unStageRepository->findAll();
         $result = [
@@ -36,9 +43,8 @@ final class StagesController extends AbstractController
     #[Route('/stages/{id}', name: 'stages_get_id', methods: ['GET'])]
     public function getDetailStage(string $id, StageRepository $unStageRepository, SerializerInterface $unSerialiseur): JsonResponse
     {
-        if (!is_numeric( $id)){
+        if (!is_numeric($id)) {
             return new JSONResponse(['message' => 'Id de ressource invalide'], JsonResponse::HTTP_BAD_REQUEST);
-
         }
         $unStage = $unStageRepository->find($id);
         if ($unStage === null) {
@@ -58,82 +64,83 @@ final class StagesController extends AbstractController
      * VOIR LES VALIDATEUR !!!!!!!!!
      */
     #[Route('/stages', name: 'stages_post', methods: ['POST'])]
-    public function createStage(Request $request, SerializerInterface $unSerialiseur,
-    EntityManagerInterface $em, URLGeneratorInterface $unUrlGenerateur)
-    {
+    public function createStage(
+        Request $request,
+        SerializerInterface $unSerialiseur,
+        EntityManagerInterface $em,
+        URLGeneratorInterface $unUrlGenerateur,
+        ValidatorInterface $unValidator
+    ) {
         $contenu = $request->getContent();
-        $unStage = $unSerialiseur->deserialize($contenu, Stage::class, 'json');
-        $seeContent= [
-            $unStage->getDescriptifMissions(),
-            $unStage->getMoyens(),
-            $unStage->getEtudiant(),
-            $unStage->getNumeroOrganisation(),
-            $unStage->getIdPeriodeStage()
-        ];
-        $count=0;
-        for ($i = 0; $i < count($seeContent); $i++) {
-            if (isset($seeContent[$i])) {
-                $count += 1;
-            }
-        }
-        if ($count == 5 &&
-            is_numeric($seeContent[2]) && 
-            is_numeric($seeContent[3]) && 
-            is_numeric($seeContent[4])){
-                $em->persist($unStage);
-                $em->flush();
-                $location = $unUrlGenerateur->generate('stages_post', 
-                                        ['id' => $unStage->getId()],
-                                        UrlGeneratorInterface::ABSOLUTE_URL);
-                $id = $unStage->getId();
-                $result = ["message" => "Stage d\'id {$id} créé",
+        try{
+            $data = $request->toArray();
+            $organisationId = $data['idOrganisation'];
+            $etudiantId = $data['idEtudiant'];
+            $periodeId = $data['idPeriodeStage'];
+            $Repo = [
+                "Organisation" => $em->getRepository(Organisation::class)->find($organisationId),
+                "Etudiant" => $em->getRepository(Etudiant::class)->find($etudiantId),
+                "Periode" => $em->getRepository(Periode::class)->find($periodeId)
+            ];
+            if ($Repo["Organisation"] !== null && $Repo["Etudiant"] !== null && $Repo["Periode"] !== null ){
+                    $unStage = $unSerialiseur->deserialize($contenu, Stage::class, 'json');
+                    $errorsStage = $unValidator->validate($unStage);
+
+                $messages = test($errorsStage);
+                if (!empty($messages)) {
+
+                    $result = ["message" => "Données erronées", "errors" => $messages];
+
+                    return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
+                } else {
+                    $unStage->setEtudiant($Repo["Etudiant"]);
+                    $unStage->setOrganisation($Repo["Organisation"]);
+                    $unStage->setPeriodeStage($Repo["Periode"]);
+                    $em->persist($unStage);
+
+                    $em->flush();
+                    $location = $unUrlGenerateur->generate(
+                        'stages_post',
+                        ['id' => $unStage->getId()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    );
+                    $id = $unStage->getId();
+                    $result = [
+                        "message" => "Stage d'id {$id} créé",
                         "data" => [
                             "_selfLink" => $location
-                            ]
-                        ];
-                return new JsonResponse($result, JSONResponse::HTTP_CREATED, [], false);
-        }
-        else {
-            $result = [
-                "message"=> "Les données fournies sont erronées",
-                "erreurs"=>[]
-            ];
-            for ($i = 0; $i < count($seeContent); $i++) {
-                if (!isset($seeContent[$i])) {
-                    if ($i == 0){
-                        $result["erreurs"] = "Descriptif mission non renseigner";
-                    }
-                    elseif ($i == 1) {
-                        $result["erreurs"] = "Moyens non renseigner";
-                    }
-                    elseif ($i == 2) {
-                        $result["erreurs"] = "Id étudiant non renseigner";
-                    }
-                    elseif ($i == 3) {
-                        $result["erreurs"] = "Id Organisation non renseigner";
-                    }
-                    else{
-                        $result["erreurs"] = "Id periode stage non renseigner";
-                    }
-                }
-                elseif (is_numeric($seeContent[$i])) {
-                    if ($i == 0 or $i == 1) {
-                        continue;
-                    }
-                    else {
-                        if ($i == 2) {
-                            $result["erreurs"] = "Id étudiant invalide";
-                        }
-                        elseif ($i == 3) {
-                            $result["erreurs"] = "Id Organisation invalide";
-                        }
-                        else{
-                            $result["erreurs"] = "Id periode stage invalide";
-                        }
-                    }
+                        ]
+                    ];
+                    return new JsonResponse($result, JSONResponse::HTTP_CREATED, [], false);
                 }
             }
-            return new JsonResponse($result, JSONResponse::HTTP_BAD_REQUEST, [], false);
+            else {
+                if ($Repo["Organisation"] == null){
+                    $messages[] = "L'identifiant de Organisation est invalide";
+                }
+                else if ($Repo["Etudiant"] == null){
+                    $messages[] = "L'identifiant de Etudiant est invalide";
+                } 
+                else {
+                    $messages[] = "L'identifiant de Periode Stage est invalide";
+                }
+
+                $result = ["message" => "Données erronées", "errors" => $messages];
+
+                return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
+            }
+        }
+        catch (Exception $e){
+            $result = ["message" => "Données erronées", "errors" => $e->getMessage()];
+            return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
         }
     }
+}
+function test($errors)
+{
+    $messages = [];
+    foreach ($errors as $error) {
+        $messages[] = [$error->getPropertyPath() => $error->getMessage()];
+    }
+    return $messages;
 }

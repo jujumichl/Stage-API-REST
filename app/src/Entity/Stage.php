@@ -6,6 +6,8 @@ use App\Repository\StageRepository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 use Doctrine\DBAL\Types\Types;
 
@@ -24,23 +26,29 @@ class Stage
     #[ORM\JoinColumn(nullable: false)]
     private ?Etudiant $etudiant = null;
 
+    
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Periode $periode = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptifMissions = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $moyens = null;
 
+    
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organisation $organisation = null;
 
     /**
      * @var Collection<int, Competence>
-     */
+     */ //////////////////////////////////////////////////// FAIRE DES GROUPES POUR NE PAS INTEGRER LES COMPETENCES
     /* #[ORM\ManyToMany(targetEntity: Competence::class)]
     private Collection $competence;
 
@@ -92,26 +100,26 @@ class Stage
         return $this;
     }
 
-    public function getIdPeriodeStage(): ?Periode
+    public function getPeriodeStage(): ?Periode
     {
         return $this->periode;
     }
 
-    public function setIdPeriodeStage(?Periode $idPeriodeStage): static
+    public function setPeriodeStage(?Periode $periodeStage): static
     {
-        $this->periode = $idPeriodeStage;
+        $this->periode = $periodeStage;
 
         return $this;
     }
 
-    public function getNumeroOrganisation(): ?Organisation
+    public function getOrganisation(): ?Organisation
     {
         return $this->organisation;
     }
 
-    public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
+    public function setOrganisation(?Organisation $organisation): static
     {
-        $this->organisation = $numeroOrganisation;
+        $this->organisation = $organisation;
 
         return $this;
     }
