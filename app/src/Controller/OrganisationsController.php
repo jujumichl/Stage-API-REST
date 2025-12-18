@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\OrganisationRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\ArrayDimFetch;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -53,7 +54,7 @@ final class OrganisationsController extends AbstractController
                 $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
             }
             return new JsonResponse([
-                'message' => 'Données erronées',
+                'message' => 'Id de ressource invalide',
                 'errors' => $messages
             ], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -93,7 +94,7 @@ final class OrganisationsController extends AbstractController
                 $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
             }
             return new JsonResponse([
-                'message' => 'Données erronées',
+                'message' => 'Id de ressource invalide',
                 'errors' => $messages
             ], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -107,14 +108,32 @@ final class OrganisationsController extends AbstractController
             return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
         }
         $data = $request->getContent();
+        $dataDecode = json_decode($data, true);
+        $dataAccept = [
+            "rue",
+            "codePostal",
+            "ville",
+            "tel",
+            "email",
+            "urlSiteWeb"
+        ];
+        $cleInvalide = array_diff(array_keys($dataDecode), $dataAccept);
+        if(count($cleInvalide) > 0) {
+            return new JsonResponse ([
+                "message" => "Les données à modifier sont erronées",
+                "erreurs" => array_values($cleInvalide)
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
         $unSerialiseur->deserialize($data, Organisation::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $uneOrganisation]);
         $em->persist($uneOrganisation);
         $em->flush();
         $location = $unUrlGenerateur->generate('app_organisation_maj', ['id' => $uneOrganisation->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $result = [
             'message' => "Organisation d'id " . $id . " a été modifiée",
-            'data' => $uneOrganisation, 
-            '_selfLink' => $location 
+            'data' => [
+                $uneOrganisation,
+                '_selfLink' => $location
+            ]
         ];
         return new JsonResponse($result, JsonResponse::HTTP_OK, ['Location' => $location], false);
     }

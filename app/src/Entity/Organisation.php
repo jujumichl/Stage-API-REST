@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrganisationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints As Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
@@ -130,8 +131,7 @@ class Organisation
         $this->urlSiteWeb = $urlSiteWeb;
 
         return $this;
-    }
-
+    }    #[SerializedName("Catégorie")]
     public function getIdCategorie(): ?Categorie
     {
         return $this->categorie;
