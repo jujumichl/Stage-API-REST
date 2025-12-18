@@ -4,14 +4,14 @@
     {
       "entity": {
         "type": "Project",
-        "id": "52764bcb-a786-489d-8196-39e28849bd9e",
+        "id": "566eeccd-9f44-428d-9c7d-7c8f2081d0b7",
         "name": "ap32-stages-apirest"
       },
       "children": [
         {
           "entity": {
             "type": "Service",
-            "id": "6a4ef6e2-8203-423f-a6ec-1d483d43de58",
+            "id": "675c7bd7-00c9-4f1f-9cf8-e0be9d63c014",
             "name": "GET-Stages"
           },
           "children": [
@@ -36,12 +36,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocol'}"
+                    "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/10"
                 },
-                "id": "34fc6062-5d25-43e7-8031-f2a4de0ecb38",
+                "id": "45ed5a75-3f1e-4837-bcd1-5ba558053f3c",
                 "name": "GET-one-stage",
                 "headers": [
                   {
@@ -108,7 +108,7 @@
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data.numeroEtudiant",
+                    "path": "$.data.etudiant",
                     "value": "200"
                   },
                   {
@@ -121,12 +121,6 @@
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
                     "path": "$.data.numeroOrganisation",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data.competence",
                     "value": "200"
                   }
                 ]
@@ -153,12 +147,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocol'}"
+                    "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "29ae9156-ef96-4309-89a8-d0fc83c866ba",
+                "id": "212c5dd3-ed56-45d3-b1e8-2a6d5ea83210",
                 "name": "Get-Tous-stages",
                 "headers": [
                   {
@@ -225,7 +219,7 @@
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data[9].numeroEtudiant",
+                    "path": "$.data[9].etudiant",
                     "value": "200"
                   },
                   {
@@ -238,12 +232,6 @@
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
                     "path": "$.data[9].numeroOrganisation",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data[9].competence",
                     "value": "200"
                   }
                 ]
@@ -270,12 +258,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocol'}"
+                    "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/0"
                 },
-                "id": "d13f5923-33c8-4d4c-8085-7b56393823fd",
+                "id": "7ac9416d-96b3-4dbe-881b-62fa80349610",
                 "name": "Get-one-stage-doesn't-exist",
                 "headers": [
                   {
@@ -333,12 +321,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocol'}"
+                    "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/a"
                 },
-                "id": "7a75c84f-cf0f-4812-abb2-56f7114821b0",
+                "id": "836042ae-b0bd-46c7-ae10-4e527e5111f3",
                 "name": "Get-stage-with-bad-parameter",
                 "headers": [
                   {
