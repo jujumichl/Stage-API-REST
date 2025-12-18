@@ -265,6 +265,75 @@
                     "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
+                  "path": "/${'path'}/organisations/@"
+                },
+                "id": "01f26bf5-a59f-4336-8432-352516d6dff3",
+                "name": "Get-Organisation-Unique-Inexistant-CaractèreSpé",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
                   "path": "/${'path'}/organisations/155"
                 },
                 "id": "11fd860d-3ccf-44a3-912d-2a6cf5b27850",
@@ -350,7 +419,7 @@
                     "comparison": "Equals",
                     "subject": "ResponseStatus",
                     "path": "code",
-                    "value": "404"
+                    "value": "400"
                   },
                   {
                     "comparison": "Exists",
@@ -368,7 +437,7 @@
                     "comparison": "Equals",
                     "subject": "ResponseJsonBody",
                     "path": "$.message",
-                    "value": "Données erronées"
+                    "value": "Id de ressource invalide"
                   },
                   {
                     "comparison": "DoesNotExist",
