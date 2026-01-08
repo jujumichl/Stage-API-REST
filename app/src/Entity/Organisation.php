@@ -34,12 +34,15 @@ class Organisation
     private ?string $ville = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{10}$/', 'message' => "L'id doit comporter 10 chiffres (Veuillez ne pas mettre d'espaces)."])]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Email(['message' => "Le mail n'est pas valide."])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Url(['message' => "L'URL n'est pas valide."])]
     private ?string $urlSiteWeb = null;
 
 
@@ -107,7 +110,6 @@ class Organisation
 
         return $this;
     }
-
 
     public function getEmail(): ?string
     {

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\OrganisationRepository;
+use Doctrine\Common\Collections\Expr\Value;
 use Symfony\Component\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Expr\ArrayDimFetch;
@@ -108,6 +109,7 @@ final class OrganisationsController extends AbstractController
             return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
         }
         $data = $request->getContent();
+        /*
         $dataDecode = json_decode($data, true);
         $dataAccept = [
             "rue",
@@ -124,8 +126,33 @@ final class OrganisationsController extends AbstractController
                 "erreurs" => array_values($cleInvalide)
             ], JsonResponse::HTTP_BAD_REQUEST);
         }
+
+        if ($dataDecode['email']) {
+            $errorMail = new Assert\Email(['pattern' => '/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/', 'message' => "Le mail n'est pas valide."]);
+            if ($errorMail->count() > 0) { // Vérifie s'il y a des erreurs de validation
+            $messages = [];
+            foreach ($errorMail as $error) {
+                $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
+            }
+            return new JsonResponse([
+                'message' => 'Id de ressource invalide',
+                'errors' => $messages
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
+            */
         $unSerialiseur->deserialize($data, Organisation::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $uneOrganisation]);
-        $em->persist($uneOrganisation);
+        // $em->persist($uneOrganisation);
+        $errors = $unValidateur -> validate($uneOrganisation);
+        if($errors->count() > 0) {
+            $messages = [];
+            foreach ($errors as $error) {
+                $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
+            }
+            return new JsonResponse([
+                'message' => 'Ressource invalide',
+                'errors' => $messages
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
         $em->flush();
         $location = $unUrlGenerateur->generate('app_organisation_maj', ['id' => $uneOrganisation->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $result = [
