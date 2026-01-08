@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrganisationRepository;
+use Doctrine\Inflector\Rules\Pattern;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints As Assert;
@@ -28,6 +29,7 @@ class Organisation
     private ?string $rue = null;
 
     #[ORM\Column(length: 6, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{5}$/'])]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100, nullable: true)]
