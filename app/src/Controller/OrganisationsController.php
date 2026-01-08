@@ -109,7 +109,6 @@ final class OrganisationsController extends AbstractController
             return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
         }
         $data = $request->getContent();
-        /*
         $dataDecode = json_decode($data, true);
         $dataAccept = [
             "rue",
@@ -125,21 +124,7 @@ final class OrganisationsController extends AbstractController
                 "message" => "Les données à modifier sont erronées",
                 "erreurs" => array_values($cleInvalide)
             ], JsonResponse::HTTP_BAD_REQUEST);
-        }
-
-        if ($dataDecode['email']) {
-            $errorMail = new Assert\Email(['pattern' => '/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/', 'message' => "Le mail n'est pas valide."]);
-            if ($errorMail->count() > 0) { // Vérifie s'il y a des erreurs de validation
-            $messages = [];
-            foreach ($errorMail as $error) {
-                $messages[] = $error->getMessage(); // Parcourt les erreurs et récupère les messages
-            }
-            return new JsonResponse([
-                'message' => 'Id de ressource invalide',
-                'errors' => $messages
-            ], JsonResponse::HTTP_BAD_REQUEST);
-        }
-            */
+        }        
         $unSerialiseur->deserialize($data, Organisation::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $uneOrganisation]);
         // $em->persist($uneOrganisation);
         $errors = $unValidateur -> validate($uneOrganisation);
