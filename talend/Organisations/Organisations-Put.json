@@ -106,6 +106,158 @@
                     "items": []
                   },
                   "bodyType": "Text",
+                  "textBody": "{ \n  \"cp\": \"35000\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/5"
+                },
+                "id": "b5c5899d-fef3-48b3-b625-2c54d23ef155",
+                "name": "Modifier-Id-Organisation-Existant-CP-Invalide",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Organisation d'id 5 a été modifiée"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{ \n  \"cp\": \"35000\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/5"
+                },
+                "id": "b9169826-e461-42bc-b01c-243f17e441cb",
+                "name": "Modifier-Id-Organisation-Existant-CP-Valide",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Organisation d'id 5 a été modifiée"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
                   "textBody": "{ \n  \"email\": \"entreprise.validegmail.com\"\n}"
                 },
                 "uri": {
