@@ -240,7 +240,6 @@ INSERT INTO Competence (id, bloc_id, numeroDansBloc, libelle) VALUES
 (16, 6, 4, 'Garantir la disponibilité, l\'intégrité et la confidentialité des services informatiques et des données de l’organisation face aux cyberattaques'),
 (17, 4, 5, 'Assurer la cybersécurité d\'une infrastructure réseau'),
 (18, 5, 5, 'Assurer la cybersécurité d\'une solution applicative et de son développement');
-/* 
 INSERT INTO stage_competence (stage_id, competence_id) VALUES
 (1, 1),
 (1, 2),
@@ -262,7 +261,6 @@ INSERT INTO stage_competence (stage_id, competence_id) VALUES
 (2, 8),
 (2, 9),
 (2, 17);
- */
 INSERT INTO JouerRole (stage_id, contact_id, role_id) VALUES
 (1, 13, 1),
 (1, 13, 2),
