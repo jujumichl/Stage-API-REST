@@ -64,4 +64,41 @@ final class ContactController extends AbstractController
             return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
         }
     }
+    #[Route('/contacts', name: 'app_contact_add', methods: ['POST'])]
+    public function addContact(SerializerInterface $unSerialiseur, ValidatorInterface $unValidateur, Request $request, ContactRepository $unRepository): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['id'] ?? null;
+        $constraints = [
+            new Assert\NotBlank(),
+            new Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])
+        ];
+        $errors = $unValidateur->validate($id, $constraints);
+        if ($errors->count() > 0) {
+            $messages = [];
+            foreach ($errors as $error) {
+                $messages[] = $error->getMessage();
+            }
+            return new JsonResponse([
+                'message' => 'Données erronées',
+                'errors' => $messages
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        $unContact = $unRepository->find($id);
+        if ($unContact) {
+            $result = [
+                'message' => 'Ressource déjà existante',
+                'data' => null
+            ];
+            $serializedResult = $unSerialiseur->serialize($result, 'json');
+            return new JSONResponse($serializedResult, JsonResponse::HTTP_CONFLICT, [], true);
+        } else {
+            $result = [
+                'message' => 'OK',
+                'data' => $unContact
+            ];
+            $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
+            return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
+        }
+    }
 }
