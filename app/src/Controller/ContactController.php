@@ -26,7 +26,7 @@ final class ContactController extends AbstractController
             'message' => 'OK',
             'data' => $lesContacts
         ];
-        $serializedResult = $unSerializer->serialize($result, 'json');
+        $serializedResult = $unSerializer->serialize($result, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
         return new JsonResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
     }
     #[Route('/contacts/{id}', name: 'app_contact_id', methods: ['GET'])]
@@ -60,7 +60,7 @@ final class ContactController extends AbstractController
                 'message' => 'OK',
                 'data' => $unContact
             ];
-            $serializedResult = $unSerialiseur->serialize($result, 'json');
+            $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
             return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
         }
     }
