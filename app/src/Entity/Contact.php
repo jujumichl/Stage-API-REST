@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints As Assert;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
@@ -12,6 +13,7 @@ class Contact
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:8)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
@@ -22,15 +24,19 @@ class Contact
     private ?string $civilite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[a-zA-Z]+$/', 'message' => "Le prénom doit comporter uniquement des lettres"])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[a-zA-Z]+$/', 'message' => "Le nom doit comporter uniquement des lettres"])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', 'message' => "L'email n'est pas valide"])]
     private ?string $email = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{10}$/', 'message' => "Le numéro de téléphone doit comporter 10 chiffres"])]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
