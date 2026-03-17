@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Entity\Organisation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -64,41 +65,40 @@ final class ContactController extends AbstractController
             return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
         }
     }
+
     #[Route('/contacts', name: 'app_contact_add', methods: ['POST'])]
-    public function addContact(SerializerInterface $unSerialiseur, ValidatorInterface $unValidateur, Request $request, ContactRepository $unRepository): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $id = $data['id'] ?? null;
-        $constraints = [
-            new Assert\NotBlank(),
-            new Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])
+    public function addContact(
+        SerializerInterface $unSerialiseur,
+        ValidatorInterface $unValidateur,
+        Request $request,
+        EntityManagerInterface $em,
+        ContactRepository $unRepository,
+        URLGeneratorInterface $unUrlGenerateur
+    ): JsonResponse {
+        $data = $request->getContent();
+        $prenom = $data['prenom'];
+        $nom = $data['nom'];
+        $email = $data['email'];
+        $tel = $data['tel'];
+        $fonction = $data['fonction'];
+        $organisationId = $data['organisation_id'];
+        $repo = [
+            'prenom' => $em->getRepository(Organisation::class) -> find($organisationId),
+            'nom' => $em->getRepository(Organisation::class) -> find($organisationId),
+            'email' => $em->getRepository(Organisation::class) -> find($organisationId),
+            'tel' => $em->getRepository(Organisation::class) -> find($organisationId),
+            'fonction' => $em->getRepository(Organisation::class) -> find($organisationId),
+            'organisation' => $em->getRepository(Organisation::class) -> find($organisationId)
         ];
-        $errors = $unValidateur->validate($id, $constraints);
-        if ($errors->count() > 0) {
-            $messages = [];
-            foreach ($errors as $error) {
-                $messages[] = $error->getMessage();
-            }
-            return new JsonResponse([
-                'message' => 'Données erronées',
-                'errors' => $messages
-            ], JsonResponse::HTTP_BAD_REQUEST);
-        }
-        $unContact = $unRepository->find($id);
-        if ($unContact) {
-            $result = [
-                'message' => 'Ressource déjà existante',
-                'data' => null
-            ];
-            $serializedResult = $unSerialiseur->serialize($result, 'json');
-            return new JSONResponse($serializedResult, JsonResponse::HTTP_CONFLICT, [], true);
-        } else {
-            $result = [
-                'message' => 'OK',
-                'data' => $unContact
-            ];
-            $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
-            return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
-        }
+        $unContact = $unSerialiseur->deserialize($data, Contact::class, 'json');
+        $unContact->setNumeroOrganisation($repo['organisation']);        
+        $em->persist($unContact);
+        $em->flush();
+        $location = $unUrlGenerateur->generate('app_contact_add', ['id' => $unContact->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $result = [
+            'message' => "Contact d'id " . $unContact->getId() . " a été ajouté",
+            '_selfLink' => $location
+        ];
+        return new JsonResponse($result, JsonResponse::HTTP_OK, [], true);
     }
 }
