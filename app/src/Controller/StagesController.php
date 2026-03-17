@@ -61,7 +61,6 @@ final class StagesController extends AbstractController
 
     /**
      * Post création d'un nouveau stage
-     * VOIR LES VALIDATEUR !!!!!!!!!
      */
     #[Route('/stages', name: 'stages_post', methods: ['POST'])]
     public function createStage(
