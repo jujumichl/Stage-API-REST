@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\EtudiantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
 class Etudiant
 {
+    #[Assert\NotBlank]
+    #[Assert\Type('int')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:8)]
@@ -141,7 +145,7 @@ class Etudiant
         return $this->specialite;
     }
 
-    public function setRefSpe(?Specialite $specialite_id): static
+    public function setSpecialite(?Specialite $specialite_id): static
     {
         $this->specialite = $specialite_id;
 

@@ -70,7 +70,7 @@ class Organisation
         return $this->rue;
     }
 
-    public function setAdresse(?string $rue): static
+    public function setRue(?string $rue): static
     {
         $this->rue = $rue;
 

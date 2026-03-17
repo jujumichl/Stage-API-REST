@@ -3,35 +3,52 @@
 namespace App\Entity;
 
 use App\Repository\StageRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: StageRepository::class)]
 class Stage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(length:8)]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
     private ?Etudiant $etudiant = null;
 
+    #[Groups(['stages.get'])]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Periode $periode = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Groups(['stages.get'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptifMissions = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Groups(['stages.get'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $moyens = null;
 
+    
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
     private ?Organisation $organisation = null;
 
     /**
@@ -76,38 +93,38 @@ class Stage
         return $this;
     }
 
-    public function getNumeroEtudiant(): ?Etudiant
+    public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
-    public function setNumeroEtudiant(?Etudiant $numeroEtudiant): static
+    public function setEtudiant(?Etudiant $Etudiant): static
     {
-        $this->etudiant = $numeroEtudiant;
+        $this->etudiant = $Etudiant;
 
         return $this;
     }
 
-    public function getIdPeriodeStage(): ?Periode
+    public function getPeriodeStage(): ?Periode
     {
         return $this->periode;
     }
 
-    public function setIdPeriodeStage(?Periode $idPeriodeStage): static
+    public function setPeriodeStage(?Periode $periodeStage): static
     {
-        $this->periode = $idPeriodeStage;
+        $this->periode = $periodeStage;
 
         return $this;
     }
 
-    public function getNumeroOrganisation(): ?Organisation
+    public function getOrganisation(): ?Organisation
     {
         return $this->organisation;
     }
 
-    public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
+    public function setOrganisation(?Organisation $organisation): static
     {
-        $this->organisation = $numeroOrganisation;
+        $this->organisation = $organisation;
 
         return $this;
     }

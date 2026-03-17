@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\PeriodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PeriodeRepository::class)]
 class Periode
 {
+    #[Assert\NotBlank]
+    #[Assert\Type('int')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:4)]
