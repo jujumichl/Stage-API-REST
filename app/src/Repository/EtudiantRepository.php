@@ -19,14 +19,13 @@ class EtudiantRepository extends ServiceEntityRepository
        /**
         * @return Etudiant Returns an array of Etudiant objects
         */
-       public function findByEmail($email): Etudiant
+       public function findByEmail($email): ?Etudiant
        {
            return $this->createQueryBuilder('e')
                ->andWhere('e.email = :email')
                ->setParameter('email', $email)
                ->getQuery()
-               ->getOneOrNullResult()
-           ;
+               ->getOneOrNullResult();
        }
 
     //    public function findOneBySomeField($value): ?Etudiant

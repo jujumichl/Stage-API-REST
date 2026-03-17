@@ -136,7 +136,7 @@ class Organisation
 
         return $this;
     }    #[SerializedName("Catégorie")]
-    public function getIdCategorie(): ?Categorie
+    public function getCategorie(): ?Categorie
     {
         return $this->categorie;
     }
