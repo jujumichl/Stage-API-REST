@@ -1,0 +1,456 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "ea23e4a8-057d-40f8-9bc2-6d35361e7024",
+        "name": "AP32"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "description": "",
+            "id": "3e981c4d-3619-41e7-ba14-32ba92ba9d12",
+            "name": "Get-Organisation"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations"
+                },
+                "id": "f69779cf-fd72-47cc-950e-17517f0938a7",
+                "name": "Get-Organisation-Tous",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/5"
+                },
+                "id": "e2f9ddfe-efee-47ee-ae08-6840a054c10b",
+                "name": "Get-Organisation-Unique",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/1"
+                },
+                "id": "d4060662-55f0-41e1-ae57-bcfe07c0b8cf",
+                "name": "Get-Organisation-Unique-Existant",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/@"
+                },
+                "id": "01f26bf5-a59f-4336-8432-352516d6dff3",
+                "name": "Get-Organisation-Unique-Inexistant-CaractèreSpé",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/155"
+                },
+                "id": "11fd860d-3ccf-44a3-912d-2a6cf5b27850",
+                "name": "Get-Organisation-Unique-Inexistant-Chiffre",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/AAB"
+                },
+                "id": "c34414d3-8401-4ec8-8caa-17ee0fd5c709",
+                "name": "Get-Organisation-Unique-Inexistant-Lettres",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

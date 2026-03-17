@@ -3,14 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\OrganisationRepository;
+use Doctrine\Inflector\Rules\Pattern;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Attribute\SerializedName;
+use Symfony\Component\Validator\Constraints As Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 class Organisation
 {
-    #[Assert\NotBlank]
-    #[Assert\Type('int')]
+    #[Assert\NotBlank()]
+    #[Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length: 8)]
@@ -27,18 +29,22 @@ class Organisation
     private ?string $rue = null;
 
     #[ORM\Column(length: 6, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{5}$/'])]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $ville = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{10}$/', 'message' => "L'id doit comporter 10 chiffres (Veuillez ne pas mettre d'espaces)."])]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Email(['message' => "Le mail n'est pas valide."])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Url(['message' => "L'URL n'est pas valide."])]
     private ?string $urlSiteWeb = null;
 
 
@@ -107,7 +113,6 @@ class Organisation
         return $this;
     }
 
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -130,9 +135,8 @@ class Organisation
         $this->urlSiteWeb = $urlSiteWeb;
 
         return $this;
-    }
-
-    public function getCategorie(): ?Categorie
+    }    #[SerializedName("Catégorie")]
+    public function getIdCategorie(): ?Categorie
     {
         return $this->categorie;
     }
