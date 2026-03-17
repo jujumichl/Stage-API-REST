@@ -13,6 +13,10 @@ class Contact
     #[ORM\Column(length:8)]
     private ?int $id = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Organisation $organisation = null;
+
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $civilite = null;
 
@@ -31,9 +35,7 @@ class Contact
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $fonction = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Organisation $numeroOrganisation = null;
+
 
     public function getId(): ?int
     {
@@ -112,14 +114,14 @@ class Contact
         return $this;
     }
 
-    public function getNumeroOrganisation(): ?Organisation
+    public function getOrganisation(): ?Organisation
     {
-        return $this->numeroOrganisation;
+        return $this->organisation;
     }
 
-    public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
+    public function setNumeroOrganisation(?Organisation $organisation): static
     {
-        $this->numeroOrganisation = $numeroOrganisation;
+        $this->organisation = $organisation;
 
         return $this;
     }

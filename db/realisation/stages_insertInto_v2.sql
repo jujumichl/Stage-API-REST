@@ -221,25 +221,25 @@ INSERT INTO Bloc (id, code, specialite_id, intitule) VALUES
 (5, 'B3', 'B', 'Cybersécurité des services informatiques'),
 (6, 'B3', 'C', 'Cybersécurité des services informatiques');
 
-INSERT INTO Competence (id, bloc_id, numeroDansBloc, specialite_id, libelle) VALUES
-(1, 1, 1, 'C', 'Gérer le patrimoine informatique'),
-(2, 1, 2, 'C', 'Répondre aux incidents et aux demandes d’assistance et d’évolution'),
-(3, 1, 3, 'C', 'Développer la présence en ligne de l’organisation'),
-(4, 1, 4, 'C', 'Travailler en mode projet'),
-(5, 1, 5, 'C', 'Mettre à disposition des utilisateurs un service informatique (orienté utilisateurs)'),
-(6, 1, 6, 'C', 'Organiser son développement professionnel'),
-(7, 2, 1, 'A', 'Concevoir une solution d\'infrastructure réseau'),
-(8, 2, 2, 'A', 'Installer, tester et déployer une solution d\'infrastructure réseau'),
-(9, 2, 3, 'A', 'Exploiter, dépanner et superviser une solution d\'infrastructure réseau'),
-(10, 3, 1, 'B', 'Concevoir et développer une solution applicative'),
-(11, 3, 2, 'B', 'Assurer la maintenance corrective ou évolutive d\'une solution applicative'),
-(12, 3, 3, 'B', 'Gérer les données'),
-(13, 6, 1, 'C', 'Protéger les données à caractère personnel'),
-(14, 6, 2, 'C', 'Préserver l\'identité numérique de l’organisation'),
-(15, 6, 3, 'C', 'Sécuriser les équipements et les usages des utilisateurs'),
-(16, 6, 4, 'C', 'Garantir la disponibilité, l\'intégrité et la confidentialité des services informatiques et des données de l’organisation face aux cyberattaques'),
-(17, 4, 5, 'A', 'Assurer la cybersécurité d\'une infrastructure réseau'),
-(18, 5, 5, 'B', 'Assurer la cybersécurité d\'une solution applicative et de son développement');
+INSERT INTO Competence (id, bloc_id, numeroDansBloc, libelle) VALUES
+(1, 1, 1, 'Gérer le patrimoine informatique'),
+(2, 1, 2, 'Répondre aux incidents et aux demandes d’assistance et d’évolution'),
+(3, 1, 3, 'Développer la présence en ligne de l’organisation'),
+(4, 1, 4, 'Travailler en mode projet'),
+(5, 1, 5, 'Mettre à disposition des utilisateurs un service informatique (orienté utilisateurs)'),
+(6, 1, 6, 'Organiser son développement professionnel'),
+(7, 2, 1, 'Concevoir une solution d\'infrastructure réseau'),
+(8, 2, 2, 'Installer, tester et déployer une solution d\'infrastructure réseau'),
+(9, 2, 3, 'Exploiter, dépanner et superviser une solution d\'infrastructure réseau'),
+(10, 3, 1, 'Concevoir et développer une solution applicative'),
+(11, 3, 2, 'Assurer la maintenance corrective ou évolutive d\'une solution applicative'),
+(12, 3, 3, 'Gérer les données'),
+(13, 6, 1, 'Protéger les données à caractère personnel'),
+(14, 6, 2, 'Préserver l\'identité numérique de l’organisation'),
+(15, 6, 3,'Sécuriser les équipements et les usages des utilisateurs'),
+(16, 6, 4, 'Garantir la disponibilité, l\'intégrité et la confidentialité des services informatiques et des données de l’organisation face aux cyberattaques'),
+(17, 4, 5, 'Assurer la cybersécurité d\'une infrastructure réseau'),
+(18, 5, 5, 'Assurer la cybersécurité d\'une solution applicative et de son développement');
 
 INSERT INTO stage_competence (stage_id, competence_id) VALUES
 (1, 1),

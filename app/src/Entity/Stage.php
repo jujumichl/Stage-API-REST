@@ -16,37 +16,35 @@ class Stage
     #[ORM\Column(length:8)]
     private ?int $id = null;
 
-    #[ORM\Column(length:4, nullable: true)]
-    private ?int $annee = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $descriptifMission = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Periode $periode = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptifMissions = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $moyens = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etudiant $numeroEtudiant = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Periodestage $idPeriodeStage = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Organisation $numeroOrganisation = null;
+    private ?Organisation $organisation = null;
 
     /**
-     * @var Collection<int, Referentiel>
+     * @var Collection<int, Competence>
      */
-    #[ORM\ManyToMany(targetEntity: Referentiel::class, inversedBy: 'idStage')]
-    private Collection $idRef;
+    #[ORM\ManyToMany(targetEntity: Competence::class)]
+    private Collection $competence;
 
     public function __construct()
     {
-        $this->idRef = new ArrayCollection();
+        $this->competence = new ArrayCollection();
     }
+
 
 
     public function getId(): ?int
@@ -54,26 +52,14 @@ class Stage
         return $this->id;
     }
 
-    public function getAnnee(): ?int
+    public function getDescriptifMissions(): ?string
     {
-        return $this->annee;
+        return $this->descriptifMissions;
     }
 
-    public function setAnnee(?int $annee): static
+    public function setDescriptifMissions(string $descriptifMissions): static
     {
-        $this->annee = $annee;
-
-        return $this;
-    }
-
-    public function getDescriptifMission(): ?string
-    {
-        return $this->descriptifMission;
-    }
-
-    public function setDescriptifMission(string $descriptifMission): static
-    {
-        $this->descriptifMission = $descriptifMission;
+        $this->descriptifMissions = $descriptifMissions;
 
         return $this;
     }
@@ -92,60 +78,60 @@ class Stage
 
     public function getNumeroEtudiant(): ?Etudiant
     {
-        return $this->numeroEtudiant;
+        return $this->etudiant;
     }
 
     public function setNumeroEtudiant(?Etudiant $numeroEtudiant): static
     {
-        $this->numeroEtudiant = $numeroEtudiant;
+        $this->etudiant = $numeroEtudiant;
 
         return $this;
     }
 
-    public function getIdPeriodeStage(): ?Periodestage
+    public function getIdPeriodeStage(): ?Periode
     {
-        return $this->idPeriodeStage;
+        return $this->periode;
     }
 
-    public function setIdPeriodeStage(?Periodestage $idPeriodeStage): static
+    public function setIdPeriodeStage(?Periode $idPeriodeStage): static
     {
-        $this->idPeriodeStage = $idPeriodeStage;
+        $this->periode = $idPeriodeStage;
 
         return $this;
     }
 
     public function getNumeroOrganisation(): ?Organisation
     {
-        return $this->numeroOrganisation;
+        return $this->organisation;
     }
 
     public function setNumeroOrganisation(?Organisation $numeroOrganisation): static
     {
-        $this->numeroOrganisation = $numeroOrganisation;
+        $this->organisation = $numeroOrganisation;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Referentiel>
+     * @return Collection<int, Competence>
      */
-    public function getIdRef(): Collection
+    public function getCompetence(): Collection
     {
-        return $this->idRef;
+        return $this->competence;
     }
 
-    public function addIdRef(Referentiel $idRef): static
+    public function addCompetence(Competence $competence): static
     {
-        if (!$this->idRef->contains($idRef)) {
-            $this->idRef->add($idRef);
+        if (!$this->competence->contains($competence)) {
+            $this->competence->add($competence);
         }
 
         return $this;
     }
 
-    public function removeIdRef(Referentiel $idRef): static
+    public function removeCompetence(Competence $competence): static
     {
-        $this->idRef->removeElement($idRef);
+        $this->competence->removeElement($competence);
 
         return $this;
     }

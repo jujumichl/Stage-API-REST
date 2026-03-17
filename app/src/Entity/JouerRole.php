@@ -11,50 +11,50 @@ class JouerRole
     #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Stage $idStage = null;
+    private ?Stage $stage = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Contact $contact = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Role $idRole = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Contact $idContact = null;
+    private ?Role $role = null;
 
 
-    public function getIdStage(): ?Stage
+    public function getStage(): ?Stage
     {
-        return $this->idStage;
+        return $this->stage;
     }
 
-    public function setIdStage(?Stage $idStage): static
+    public function setStage(?Stage $stage): static
     {
-        $this->idStage = $idStage;
+        $this->stage = $stage;
 
         return $this;
     }
 
-    public function getIdRole(): ?Role
+    public function getRole(): ?Role
     {
-        return $this->idRole;
+        return $this->role;
     }
 
-    public function setIdRole(?Role $idRole): static
+    public function setRole(?Role $role): static
     {
-        $this->idRole = $idRole;
+        $this->role = $role;
 
         return $this;
     }
 
-    public function getIdContact(): ?Contact
+    public function getContact(): ?Contact
     {
-        return $this->idContact;
+        return $this->contact;
     }
 
-    public function setIdContact(?Contact $idContact): static
+    public function setContact(?Contact $contact): static
     {
-        $this->idContact = $idContact;
+        $this->contact = $contact;
 
         return $this;
     }

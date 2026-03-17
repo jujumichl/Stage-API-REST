@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\OrganisationRepository;
+use Doctrine\Inflector\Rules\Pattern;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\SerializedName;
+use Symfony\Component\Validator\Constraints As Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 class Organisation
 {
+    #[Assert\NotBlank()]
+    #[Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length: 8)]
@@ -16,33 +21,32 @@ class Organisation
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Categorie $categorie = null;
+
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $adresse = null;
+    private ?string $rue = null;
 
     #[ORM\Column(length: 6, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{5}$/'])]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Regex(['pattern' => '/^[0-9]{10}$/', 'message' => "L'id doit comporter 10 chiffres (Veuillez ne pas mettre d'espaces)."])]
     private ?string $tel = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $fax = null;
-
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Email(['message' => "Le mail n'est pas valide."])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Url(['message' => "L'URL n'est pas valide."])]
     private ?string $urlSiteWeb = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $infoAssurance = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Categorie $idCategorie = null;
 
     public function getId(): ?int
     {
@@ -61,14 +65,14 @@ class Organisation
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getRue(): ?string
     {
-        return $this->adresse;
+        return $this->rue;
     }
 
-    public function setAdresse(?string $adresse): static
+    public function setAdresse(?string $rue): static
     {
-        $this->adresse = $adresse;
+        $this->rue = $rue;
 
         return $this;
     }
@@ -109,18 +113,6 @@ class Organisation
         return $this;
     }
 
-    public function getFax(): ?string
-    {
-        return $this->fax;
-    }
-
-    public function setFax(?string $fax): static
-    {
-        $this->fax = $fax;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -143,28 +135,15 @@ class Organisation
         $this->urlSiteWeb = $urlSiteWeb;
 
         return $this;
-    }
-
-    public function getInfoAssurance(): ?string
-    {
-        return $this->infoAssurance;
-    }
-
-    public function setInfoAssurance(string $infoAssurance): static
-    {
-        $this->infoAssurance = $infoAssurance;
-
-        return $this;
-    }
-
+    }    #[SerializedName("Catégorie")]
     public function getIdCategorie(): ?Categorie
     {
-        return $this->idCategorie;
+        return $this->categorie;
     }
 
-    public function setIdCategorie(?Categorie $idCategorie): static
+    public function setCategorie(?Categorie $categorie): static
     {
-        $this->idCategorie = $idCategorie;
+        $this->categorie = $categorie;
 
         return $this;
     }
