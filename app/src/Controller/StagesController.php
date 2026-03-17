@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Json;
 
 final class StagesController extends AbstractController
 {
@@ -58,7 +59,48 @@ final class StagesController extends AbstractController
 
         return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
     }
+    #regions getteur
+    /**
+     * Renvoie une oragnisation 
+     * @param mixed $data donnée passée dans le corps de la requête
+     * @param EntityManagerInterface $em
+     * @return Organisation ou null
+     */
+    public function getOraganisation($data, $em): ?Organisation
+    {
+        $idOrganisation = $data['idOrganisation'];
+        return $em->getRepository(Organisation::class)->find($idOrganisation);
+    }
 
+    /**
+     * Renvoie un étudiant
+     * @param mixed $data données de la requête
+     * @param EntityManagerInterface $em 
+     * @return ?Etudiant un objet etudiant ou null
+     */
+    public function getEtudiant($data, $em): ?Etudiant
+    {
+        $etudiantId = isset($data['idEtudiant']) ? $data['idEtudiant'] : $data['emailEtudiant'];
+        if (str_contains($etudiantId, '@')) {
+            $etudiant = $em->getRepository(Etudiant::class)->findByEmail($etudiantId);
+        } else {
+            $etudiant = $em->getRepository(Etudiant::class)->find($etudiantId);
+        }
+        return $etudiant;
+    }
+
+    /**
+     * Renvoie une période de stage
+     * @param mixed $data données du corps de la requête
+     * @param EntityManagerInterface $em
+     * @return ?Periode renvoie un objet periode ou null
+     */
+    public function getPeriode($data, $em): ?Periode
+    {
+        $periodeId = $data['idPeriodeStage'];
+        return $em->getRepository(Periode::class)->find($periodeId);
+    }
+    #endregions
     /**
      * Post création d'un nouveau stage
      */
@@ -71,19 +113,17 @@ final class StagesController extends AbstractController
         ValidatorInterface $unValidator
     ) {
         $contenu = $request->getContent();
-        try{
+        try {
             $data = $request->toArray();
-            $organisationId = $data['idOrganisation'];
-            $etudiantId = $data['idEtudiant'];
-            $periodeId = $data['idPeriodeStage'];
             $Repo = [
-                "Organisation" => $em->getRepository(Organisation::class)->find($organisationId),
-                "Etudiant" => $em->getRepository(Etudiant::class)->find($etudiantId),
-                "Periode" => $em->getRepository(Periode::class)->find($periodeId)
+                "Organisation" => $this->getOraganisation($data, $em),
+                "Etudiant" => $this->getEtudiant($data, $em),
+                "Periode" => $this->getPeriode($data, $em)
             ];
-            if ($Repo["Organisation"] !== null && $Repo["Etudiant"] !== null && $Repo["Periode"] !== null ){
-                    $unStage = $unSerialiseur->deserialize($contenu, Stage::class, 'json');
-                    $errorsStage = $unValidator->validate($unStage);
+
+            if ($Repo["Organisation"] !== null && $Repo["Etudiant"] !== null && $Repo["Periode"] !== null) {
+                $unStage = $unSerialiseur->deserialize($contenu, Stage::class, 'json');
+                $errorsStage = $unValidator->validate($unStage);
 
                 $messages = test($errorsStage);
                 if (!empty($messages)) {
@@ -112,15 +152,12 @@ final class StagesController extends AbstractController
                     ];
                     return new JsonResponse($result, JSONResponse::HTTP_CREATED, [], false);
                 }
-            }
-            else {
-                if ($Repo["Organisation"] == null){
+            } else {
+                if ($Repo["Organisation"] == null) {
                     $messages[] = "L'identifiant de Organisation est invalide";
-                }
-                else if ($Repo["Etudiant"] == null){
+                } else if ($Repo["Etudiant"] == null) {
                     $messages[] = "L'identifiant de Etudiant est invalide";
-                } 
-                else {
+                } else {
                     $messages[] = "L'identifiant de Periode Stage est invalide";
                 }
 
@@ -128,8 +165,7 @@ final class StagesController extends AbstractController
 
                 return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
             }
-        }
-        catch (Exception $e){
+        } catch (Exception $e) {
             $result = ["message" => "Données erronées", "errors" => $e->getMessage()];
             return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
         }
