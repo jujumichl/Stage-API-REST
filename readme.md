@@ -1,30 +1,163 @@
-# Cahier des charges[🌐](./docs/cdc.md)
+# Documentation installation et configuration API-REST sur serveur de recette Ubuntu Server 24.04
 
-# Documentation API-REST des ressources organisations, stages et contacts[🌐](./docs/api.md)
+## Vérification des composants
 
-# Documentation installation et configuration API-REST sur serveur de recette Ubuntu Server 22.04[🌐](./docs/vm-us22web-config.md)
+Sur le serveur de recette, la présence de Apache2, MariaDB, PHP et Composer est obligatoire pour importer le projet.
 
-# Bonnes pratiques sur la structure de la base de données[🌐](./docs/db-guidelines.md)
+* Pour voir l'existence et le statut de Apache2 : `sudo systemctl status apache2`
+* Pour voir l'existence et le statut de MariaDB : `sudo systemctl status mariadb`
+* Pour voir la version de Composer : `composer --version`
+* Pour voir la version de PHP : `php -v`
 
-# Installation API-REST sur poste de travail ou serveur de test
-1. Récupérer le dépôt à l'emplacement souhaité par la commande :
+En cas de manque, veuillez suivre ces documentations : 
+
+* [Documentation de Apache2](https://doc.ubuntu-fr.org/apache2)
+* [Documentation de MariaDB](https://doc.ubuntu-fr.org/mariadb)
+* [Documentation de Composer](https://doc.ubuntu-fr.org/composer)
+* [Documentation de PHP](https://doc.ubuntu-fr.org/php)
+
+>[!Warning]
+> Vérifier dans votre fichier de configuration apache que vous avez bien `CGIPassAuth On`.  
+> Sinon [cliquez ici](#Apache-conf) 
+
+Dans le fichier conf de Apache2 : `cd /etc/apache2/`, éditez le fichier `apache2.conf` avec la commande `sudo nano apache2.conf` et ajoutez à la fin de la directive ce code :
 ```bash
-git clone urlDepot
+<Directory "C:/xampp/htdocs"> :
+    # Transmits Authorization header to PHP script
+    CGIPassAuth On
 ```
-2. Télécharger les composants Symfony référencés dans le fichier `composer.json` :
+
+Une fois que tout est fonctionnel, vérifier la présence des fichiers XML avec cette commande : `php -m | grep xml`
+
+## Clonage du projet 
+Se placer dans le dossier souhaité pour le clonage (nous recommandons /var/www/html/ ou C:\\xampp\\htdocs\\).
+### Sur Linux
+>[!WARNING]
+> L'URL fournie dans la commande doit être modifiée.
+> Remplacer `<TOKEN>` par votre access token, dans la commande vous pouvez choisir quelle branche cloner, si vous souhaitez avoir l'authentification JWT remplacer `<BRANCHE>` par `JWT` sinon `DEV`.
+```basch
+sudo git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch <BRANCHE> ap32-stages-apirest 
+```
+
+#### Initialisation du projet :
+Rendez-vous dans `ap32-stages-apirest/app` puis installez les dépendances `sudo composer install`, ensuite copier votre `.env` et renommez-le en `.env.local`, vous modifierez ce bloque `.env.local` :
+```powershell
+# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
+```
+Par :
+```powershell
+DATABASE_URL="mysql://userStages:<MDP>@127.0.0.1:3306/bdStages?serverVersion=10.11.13&charset=utf8"
+# DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/
+``` 
+>[!Warning]
+> Vérifiez que vous avez la même version de MySQL avec la commande `mysql --version`
+>
+> N'oubliez pas de changer le `<MDP>` avec le mot de passe de l'utilisateur
+
+Nous allons ensuite changer les droits sur les fichiers bdd.sh et console en leur ajoutant le droit d'exécution.
 ```bash
-composer install
+sudo chmod u+x ./bin/console && sudo chmod u+x ./bin/bdd.sh
 ```
-Les composants installés sont ceux du projet `symfony/skeleton` + `symfony/orm-pack` + `symfony/serializer-pack` + `symfony/maker-bundle` en mode `dev`.
 
-La directive `naming_strategy`du fichier `config\packages\doctrine.yaml`a été positionnée à `doctrine.orm.naming_strategy.default` pour que les noms d'entités avec plusieurs mots soient laissés en minuscules sans caractère underscore entre les 2 mots.
+Enfin nous allons insérer notre jeu de données dans notre base de données
+```bash
+ sudo bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
+``` 
 
-3. Sous Linux, rendre le sous-répertoire `var` accessible en écriture pour le compte Linux utilisé par votre serveur web.
-4. Copier le fichier `.env` dans un nouveau fichier `.env.local`.
-5. Dans ce nouveau fichier `.env.local`, adapter la variable d'environnement suivante :
-```php
-DATABASE_URL
+### Sur Windows
+Ouvrez un interpréteur de commande en tapant `cmd` dans la barre de recherche Windows ou rendez-vous à l'endroit de travail souhaité et effectuer un clic droit et faites `ouvrir dans le Terminal`.
+
+>[!WARNING]
+> L'URL fournie dans la commande doit être modifiée.
+> Remplacer `<TOKEN>` par votre access token, dans la commande vous pouvez choisir quelle branche cloner, si vous souhaitez avoir l'authentification JWT remplacer `<BRANCHE>` par `JWT` sinon `DEV`.
+```bash
+git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch <BRANCHE> ap32-stages-apirest 
 ```
-6. Créer la base de données par la commande : `php bin/console doctrine:database:create`
-7. Créer le schéma de base de données par la commande : `php bin/console doctrine:schema:update --force`
-8. Importer la base de données via le script sql du répertoire `db/realisation/stages_insertinto_v2.sql`
+
+#### Initialisation du projet :
+Rendez-vous dans `ap32-stages-apirest/app` puis installez les dépendances `composer install`, ensuite copiez votre `.env` et renommez-le en `.env.local`, vous modifierez ce bloc :
+```powershell
+# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
+```
+Par :
+```powershell
+DATABASE_URL="mysql://userStages:<MDP>@127.0.0.1:3306/bdStages?serverVersion=10.11.13&charset=utf8"
+# DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/
+``` 
+#### Utilisation du JWT
+Aller dans le fichier `.env.local` et modifier le bloc suivant : 
+```powershell
+###> lexik/jwt-authentication-bundle ###
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=ef9505d5e08bb528d4a11b819b307a9f20f4bd16e2cb995d316314e2fb17a35b
+###< lexik/jwt-authentication-bundle ###
+```
+Par ce bloc :
+```powershell
+###> lexik/jwt-authentication-bundle ###
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=
+###< lexik/jwt-authentication-bundle ###
+```
+L'étape suivante va être la création du jeu de clés RSA, en créant par la clé privée/publique puis on va extraire la clé publique. Voici la démarche à suivre :
+* Se mettre en utilisateur `sudoer` avec la commande `sudo su`
+* Se placer dans le dossier `./config/` puis écrire ceci :
+```bash 
+mkdir jwt && cd ./jwt
+```
+```bash
+openssl genrsa -out private.pem 2048 
+&& 
+openssl rsa -in ./private.pem -pubout > public.pem
+```
+Les droits sur les clés privées et publiques ne permettent pas à l'utilisateur web d'utiliser ces clés, nous devons donc changer les droits (tout d'abord le groupe puis les droits du groupe)
+>[!Warning]
+> Vérifiez que votre utilisateur Apache est bien dans le groupe `www-data` et que ce groupe existe.
+
+```bash
+chgrp -R www-data ../jwt/ 
+&& 
+chmod -R 640 ../jwt/*
+```
+
+>[!Warning]
+> Vérifiez que vous avez la même version de MySQL avec la commande (toujours dans l'invite de commande) `mysql --version`
+>
+> N'oubliez pas de changer le `<MDP>` avec le mot de passe de l'utilisateur
+
+Enfin nous allons insérer notre jeu de données dans notre base de données
+```bash
+ bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
+``` 
+
+## Apache conf
+Se rendre dans le fichier apache `cd /etc/apache2/`, faire une copie du fichier `apache.conf` avec la commande `sudo cp apache2.conf apache2.conf.bak`.
+
+Une fois la copie faite, il faut l'éditer :
+```bash 
+sudo nano apache2.conf
+```
+
+Une fois dans le nano du fichier `.conf`, remplacez le bloc suivant :  
+
+```powershell 
+<Directory /var/www/> 
+  Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+```
+par ce bloc :
+
+```powershell
+<Directory /var/www/> 
+  Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+   CGIPassAuth On
+</Directory>
+```
