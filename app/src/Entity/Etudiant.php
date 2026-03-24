@@ -6,6 +6,8 @@ use App\Repository\EtudiantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
@@ -162,5 +164,23 @@ class Etudiant
         $this->mdp = $mdp;
 
         return $this;
+    }
+
+    public function getRoles():array
+    {
+        return ['ROLE_ETUDIANT'];
+    }
+
+    public function getPassword():string {
+        return $this->getmdp();
+    }
+
+    public function getUserIdentifier(): string {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials(): void
+    {
+        return;
     }
 }
