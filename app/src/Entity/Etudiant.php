@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
-class Etudiant
+class Etudiant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[Assert\NotBlank]
     #[Assert\Type('int')]
