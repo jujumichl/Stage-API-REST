@@ -1,0 +1,61 @@
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+            algorithm: plaintext # disable hashing (only do this in tests!)
+
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    providers:
+        users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\Etudiant
+                property: email # indique l'id de connexion
+
+    firewalls:
+        dev:
+            # Ensure dev tools and static assets are always allowed
+            pattern: ^/(_profiler|_wdt|assets|build)/
+            security: false
+        login:
+            pattern: ^/login
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /login
+                username_path: login
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        main:
+            pattern: ^/
+            provider: app_user_provider
+            stateless: true
+            jwt: ~
+
+            # Activate different ways to authenticate:
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+when@dev:
+    security:
+        
+        # Note: Only the *first* matching rule is applied
+        access_control:
+            - { path: ^/, roles: PUBLIC_ACCESS }
+
+            # - { path: ^/admin, roles: ROLE_ADMIN }
+            # - { path: ^/profile, roles: ROLE_USER }
+
+when@prod:
+    security:
+        
+        # Note: Only the *first* matching rule is applied
+        access_control:
+            - { path: ^/login, roles: PUBLIC_ACCESS }
+            - { path: ^/, roles: ROLE_ETUDIANT }
+
+            # - { path: ^/admin, roles: ROLE_ADMIN }
+            # - { path: ^/profile, roles: ROLE_USER }
