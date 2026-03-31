@@ -18,7 +18,7 @@ En cas de manque, veuillez suivre ces documentations :
 
 >[!Warning]
 > Vérifier dans votre fichier de configuration apache que vous avez bien `CGIPassAuth On`.  
-> Sinon [cliquez ici](#Apache-conf) 
+> Sinon [cliquez ici](#apache-conf) 
 
 Dans le fichier conf de Apache2 : `cd /etc/apache2/`, éditez le fichier `apache2.conf` avec la commande `sudo nano apache2.conf` et ajoutez à la fin de la directive ce code :
 ```bash
@@ -34,9 +34,11 @@ Se placer dans le dossier souhaité pour le clonage (nous recommandons /var/www/
 ### Sur Linux
 >[!WARNING]
 > L'URL fournie dans la commande doit être modifiée.
-> Remplacer `<TOKEN>` par votre access token, dans la commande vous pouvez choisir quelle branche cloner, si vous souhaitez avoir l'authentification JWT remplacer `<BRANCHE>` par `JWT` sinon `DEV`.
-```basch
-sudo git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch <BRANCHE> ap32-stages-apirest 
+> Remplacer `<TOKEN>` par votre access token.
+
+
+```bash
+sudo git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest 
 ```
 
 #### Initialisation du projet :
@@ -65,14 +67,17 @@ Enfin nous allons insérer notre jeu de données dans notre base de données
  sudo bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
 ``` 
 
+> [!info]
+> Si la commande précédente vous a générer une erreur veuillez Cliquer [ici](#sourcing-des-donnees)
+
 ### Sur Windows
 Ouvrez un interpréteur de commande en tapant `cmd` dans la barre de recherche Windows ou rendez-vous à l'endroit de travail souhaité et effectuer un clic droit et faites `ouvrir dans le Terminal`.
 
 >[!WARNING]
 > L'URL fournie dans la commande doit être modifiée.
-> Remplacer `<TOKEN>` par votre access token, dans la commande vous pouvez choisir quelle branche cloner, si vous souhaitez avoir l'authentification JWT remplacer `<BRANCHE>` par `JWT` sinon `DEV`.
+> Remplacer `<TOKEN>` par votre access token
 ```bash
-git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch <BRANCHE> ap32-stages-apirest 
+git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest 
 ```
 
 #### Initialisation du projet :
@@ -86,7 +91,8 @@ Par :
 DATABASE_URL="mysql://userStages:<MDP>@127.0.0.1:3306/bdStages?serverVersion=10.11.13&charset=utf8"
 # DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/
 ``` 
-#### Utilisation du JWT
+### JWT
+#### Activer JWT 
 Aller dans le fichier `.env.local` et modifier le bloc suivant : 
 ```powershell
 ###> lexik/jwt-authentication-bundle ###
@@ -133,6 +139,8 @@ Enfin nous allons insérer notre jeu de données dans notre base de données
 ```bash
  bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
 ``` 
+#### Désactivation du JWT 
+Pour désactiver l'authentification par `JWT`, il faut changer dans le `.env.local` le `APP_ENV=`, dans l'environnement de `dev` l'authentification JWT est `désactivée`, cependant dans l'environnement de `prod` l'authentification JWT est activée.
 
 ## Apache conf
 Se rendre dans le fichier apache `cd /etc/apache2/`, faire une copie du fichier `apache.conf` avec la commande `sudo cp apache2.conf apache2.conf.bak`.
@@ -144,7 +152,7 @@ sudo nano apache2.conf
 
 Une fois dans le nano du fichier `.conf`, remplacez le bloc suivant :  
 
-```powershell 
+```bash 
 <Directory /var/www/> 
   Options Indexes FollowSymLinks
         AllowOverride None
@@ -153,11 +161,25 @@ Une fois dans le nano du fichier `.conf`, remplacez le bloc suivant :
 ```
 par ce bloc :
 
-```powershell
+```bash
 <Directory /var/www/> 
   Options Indexes FollowSymLinks
         AllowOverride None
         Require all granted
    CGIPassAuth On
 </Directory>
+```
+> Redémarrer apache2
+
+## Sourcing des données
+En cas d'erreur lors du sourcing des données, effectuées ces commandes ci dessous : 
+```bash
+# Connexion a mysql 
+sudo mysql -u root
+``` 
+
+```sql
+-- Sourcing des données
+use bdStages;
+source ./app/db/realisation/stages_insertInto_v2.sql;
 ```
