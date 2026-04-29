@@ -74,7 +74,7 @@ final class ContactController extends AbstractController
 
      // Il doit être modifier le code pour avoir les contacts de l'orga
      #[Route('/organisation/{id}/contacts', name: 'app_organisation_contacts', methods: ['GET'])]
-     public function getContactsByOrganisation($id, SerializerInterface $unSerialiseur, OrganisationRepository $unRepository, ValidatorInterface $unValidateur)
+     public function getContactsByOrganisation($id, SerializerInterface $unSerialiseur, OrganisationRepository $organisationRepository, ContactRepository $contactRepository, ValidatorInterface $unValidateur)
      {
         $constraints = [
              new Assert\NotBlank(),
@@ -91,7 +91,7 @@ final class ContactController extends AbstractController
                  'errors' => $messages
              ], JsonResponse::HTTP_BAD_REQUEST);
          }
-         $uneOrganisation = $unRepository->find($id);
+         $uneOrganisation = $organisationRepository->find($id);
          if (!$uneOrganisation) {
              $result = [
                  'message' => 'Ressource inexistante',
@@ -100,9 +100,10 @@ final class ContactController extends AbstractController
              $serializedResult = $unSerialiseur->serialize($result, 'json');
              return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
          } else {
+            $desContacts = $contactRepository->findBy(['organisation' => $uneOrganisation]);
              $result = [
                  'message' => 'OK',
-                 'data' => $uneOrganisation
+                 'data' => $desContacts
              ];
              $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
              return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
