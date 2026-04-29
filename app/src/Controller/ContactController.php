@@ -2,21 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
-use App\Entity\Organisation;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ContactRepository;
 use App\Repository\OrganisationRepository;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\MakerBundle\Validator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ContactController extends AbstractController
 {
@@ -79,7 +75,7 @@ final class ContactController extends AbstractController
         $constraints = [
              new Assert\NotBlank(),
              new Assert\Regex(['pattern' => '/^[0-9]{1,8}$/', 'message' => "L'id doit comporter au minimum un et au maximum huit chiffres"]),
-         ];
+        ];
          $errors = $unValidateur->validate($id, $constraints);
          if ($errors->count() > 0) {
              $messages = [];
