@@ -1,0 +1,368 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "ea23e4a8-057d-40f8-9bc2-6d35361e7024",
+        "name": "AP32"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "id": "e8fcc7d3-2f83-49fd-bdb8-7ba38b343979",
+            "name": "GET-Contact"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/@/contacts"
+                },
+                "id": "7d578482-67db-45fc-b005-ac8578785091",
+                "name": "Get-Contact-Unique-Inexistant-CaractèreSpé",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/155/contacts"
+                },
+                "id": "ccce4004-2e4e-4c55-ae85-454fc9173c5f",
+                "name": "Get-Contact-Unique-Inexistant-Chiffre",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/AAB"
+                },
+                "id": "af195dcf-ef0f-4011-a3d6-79aebfa0a5d8",
+                "name": "Get-Contact-Unique-Inexistant-Lettres",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts"
+                },
+                "id": "86727397-6e6e-4ced-998a-a32a189eb04b",
+                "name": "Get-Contacts",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts/6"
+                },
+                "id": "a0e819ce-4084-47cb-ac5f-69f7d0408135",
+                "name": "Get-Contacts-by-id",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/2/contacts"
+                },
+                "id": "7c4f3978-8ec1-4a65-ad78-2bd843c9dec7",
+                "name": "Get-Contacts-by-id-organisation",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
