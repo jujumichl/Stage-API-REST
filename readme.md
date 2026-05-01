@@ -1,185 +1,391 @@
-# Documentation installation et configuration API-REST sur serveur de recette Ubuntu Server 24.04
+# Installation & Configuration — API-REST sur Ubuntu Server 24.04
+
+---
+
+## Sommaire
+
+- [Installation \& Configuration — API-REST sur Ubuntu Server 24.04](#installation--configuration--api-rest-sur-ubuntu-server-2404)
+  - [Sommaire](#sommaire)
+  - [Vérification des composants](#vérification-des-composants)
+    - [Version attendue](#version-attendue)
+    - [Commandes de vérification](#commandes-de-vérification)
+  - [Clonage du projet](#clonage-du-projet)
+    - [Sur Linux](#sur-linux)
+      - [Initialisation du projet](#initialisation-du-projet)
+    - [Sur Windows](#sur-windows)
+      - [Initialisation du projet](#initialisation-du-projet-1)
+  - [Configuration JWT](#configuration-jwt)
+    - [Linux](#linux)
+      - [Activer JWT](#activer-jwt)
+      - [Générer les clés RSA](#générer-les-clés-rsa)
+      - [Tester la génération d'un JWT](#tester-la-génération-dun-jwt)
+    - [Windows](#windows)
+      - [Activer JWT](#activer-jwt-1)
+      - [Générer les clés RSA](#générer-les-clés-rsa-1)
+      - [Tester la génération d'un JWT](#tester-la-génération-dun-jwt-1)
+  - [Désactivation du JWT](#désactivation-du-jwt)
+  - [Configuration Apache](#configuration-apache)
+    - [Linux](#linux-1)
+    - [Windows](#windows-1)
+  - [Sourcing des données — Dépannage](#sourcing-des-données--dépannage)
+
+---
 
 ## Vérification des composants
 
-Sur le serveur de recette, la présence de Apache2, MariaDB, PHP et Composer est obligatoire pour importer le projet.
+Avant de commencer, assurez-vous que **Apache2**, **MariaDB**, **PHP** et **Composer** sont présents sur le serveur.
 
-* Pour voir l'existence et le statut de Apache2 : `sudo systemctl status apache2`
-* Pour voir l'existence et le statut de MariaDB : `sudo systemctl status mariadb`
-* Pour voir la version de Composer : `composer --version`
-* Pour voir la version de PHP : `php -v`
+### Version attendue
 
-En cas de manque, veuillez suivre ces documentations : 
+| Composant | Version |
+|-----------|---------|
+| XAMPP / PHP | `8.2.x` |
 
-* [Documentation de Apache2](https://doc.ubuntu-fr.org/apache2)
-* [Documentation de MariaDB](https://doc.ubuntu-fr.org/mariadb)
-* [Documentation de Composer](https://doc.ubuntu-fr.org/composer)
-* [Documentation de PHP](https://doc.ubuntu-fr.org/php)
+### Commandes de vérification
 
->[!Warning]
-> Vérifier dans votre fichier de configuration apache que vous avez bien `CGIPassAuth On`.  
-> Sinon [cliquez ici](#apache-conf) 
-
-Dans le fichier conf de Apache2 : `cd /etc/apache2/`, éditez le fichier `apache2.conf` avec la commande `sudo nano apache2.conf` et ajoutez à la fin de la directive ce code :
 ```bash
-<Directory "C:/xampp/htdocs"> :
-    # Transmits Authorization header to PHP script
-    CGIPassAuth On
+sudo systemctl status apache2   # Statut Apache2
+sudo systemctl status mariadb   # Statut MariaDB
+composer --version               # Version de Composer
+php -v                           # Version de PHP
 ```
 
-Une fois que tout est fonctionnel, vérifier la présence des fichiers XML avec cette commande : `php -m | grep xml`
+> Liens vers les documentations d'installation :
+> [Apache2](https://doc.ubuntu-fr.org/apache2) · [MariaDB](https://doc.ubuntu-fr.org/mariadb) · [Composer](https://doc.ubuntu-fr.org/composer) · [PHP](https://doc.ubuntu-fr.org/php)
 
-## Clonage du projet 
-Se placer dans le dossier souhaité pour le clonage (nous recommandons /var/www/html/ ou C:\\xampp\\htdocs\\).
+> [!WARNING]
+> - Vérifier dans votre fichier de configuration Apache que vous avez bien `CGIPassAuth On`
+> - Vérifier dans votre fichier `php.ini` que l'extension `sodium` est activée
+>
+> Si ce n'est pas le cas, consultez la section [Configuration Apache](#configuration-apache)
+
+Vérifiez également la présence des fichiers XML :
+
+```bash
+php -m | grep xml
+```
+
+---
+
+## Clonage du projet
+
+Placez-vous dans le dossier souhaité :
+- **Linux** : `/var/www/html/`
+- **Windows** : `C:\xampp\htdocs\`
+
+---
+
 ### Sur Linux
->[!WARNING]
-> L'URL fournie dans la commande doit être modifiée.
-> Remplacer `<TOKEN>` par votre access token.
 
+> [!WARNING]
+> Remplacez `<TOKEN>` par votre access token GitLab avant d'exécuter la commande.
 
 ```bash
-sudo git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest 
+sudo git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest
 ```
 
-#### Initialisation du projet :
-Rendez-vous dans `ap32-stages-apirest/app` puis installez les dépendances `sudo composer install`, ensuite copier votre `.env` et renommez-le en `.env.local`, vous modifierez ce bloque `.env.local` :
-```powershell
+#### Initialisation du projet
+
+**1. Installer les dépendances**
+
+Rendez-vous dans `ap32-stages-apirest/app` :
+
+```bash
+sudo composer install
+```
+
+**2. Configurer l'environnement**
+
+Copiez le fichier `.env` et renommez-le en `.env.local` :
+
+```bash
+cp .env .env.local
+```
+
+Dans `.env.local`, **remplacez** ce bloc :
+
+```dotenv
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
 ```
-Par :
-```powershell
+
+**Par** :
+
+```dotenv
 DATABASE_URL="mysql://userStages:<MDP>@127.0.0.1:3306/bdStages?serverVersion=10.11.13&charset=utf8"
 # DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/
-``` 
->[!Warning]
-> Vérifiez que vous avez la même version de MySQL avec la commande `mysql --version`
->
-> N'oubliez pas de changer le `<MDP>` avec le mot de passe de l'utilisateur
+```
 
-Nous allons ensuite changer les droits sur les fichiers bdd.sh et console en leur ajoutant le droit d'exécution.
+> [!WARNING]
+> - Vérifiez votre version MySQL avec `mysql --version`
+> - Remplacez `<MDP>` par le mot de passe de l'utilisateur
+
+**3. Configurer les droits d'exécution**
+
 ```bash
 sudo chmod u+x ./bin/console && sudo chmod u+x ./bin/bdd.sh
 ```
 
-Enfin nous allons insérer notre jeu de données dans notre base de données
-```bash
- sudo bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
-``` 
+**4. Créer l'utilisateur de base de données**
 
-> [!info]
-> Si la commande précédente vous a générer une erreur veuillez Cliquer [ici](#sourcing-des-donnees)
+Connectez-vous à MySQL puis exécutez :
 
-### Sur Windows
-Ouvrez un interpréteur de commande en tapant `cmd` dans la barre de recherche Windows ou rendez-vous à l'endroit de travail souhaité et effectuer un clic droit et faites `ouvrir dans le Terminal`.
-
->[!WARNING]
-> L'URL fournie dans la commande doit être modifiée.
-> Remplacer `<TOKEN>` par votre access token
-```bash
-git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest 
+```sql
+SOURCE stages_base_user.sql;
 ```
 
-#### Initialisation du projet :
-Rendez-vous dans `ap32-stages-apirest/app` puis installez les dépendances `composer install`, ensuite copiez votre `.env` et renommez-le en `.env.local`, vous modifierez ce bloc :
-```powershell
+**5. Charger l'ORM**
+
+Depuis la racine du projet :
+
+```bash
+sudo php bin/bdd.sh
+```
+
+**6. Insérer les données**
+
+```bash
+sudo php bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
+```
+
+> [!INFO]
+> En cas d'erreur lors de cette commande, consultez la section [Sourcing des données](#sourcing-des-données--dépannage)
+
+---
+
+### Sur Windows
+
+Ouvrez un terminal (`cmd` dans la barre de recherche, ou clic droit > *Ouvrir dans le Terminal*).
+
+> [!WARNING]
+> Remplacez `<TOKEN>` par votre access token GitLab avant d'exécuter la commande.
+
+```bash
+git clone https://gitlab-ci-token:<TOKEN>@gitlab.siovhb.lycee-basch.fr/titouan-goinard/ap32-stages-apirest.git --branch DEV ap32-stages-apirest
+```
+
+#### Initialisation du projet
+
+**1. Installer les dépendances**
+
+Rendez-vous dans `ap32-stages-apirest/app` :
+
+```bash
+composer install
+```
+
+**2. Configurer l'environnement**
+
+Copiez `.env` en `.env.local`, puis **remplacez** ce bloc :
+
+```dotenv
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
 ```
-Par :
-```powershell
+
+**Par** :
+
+```dotenv
 DATABASE_URL="mysql://userStages:<MDP>@127.0.0.1:3306/bdStages?serverVersion=10.11.13&charset=utf8"
 # DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/
-``` 
-### JWT
-#### Activer JWT 
-Aller dans le fichier `.env.local` et modifier le bloc suivant : 
-```powershell
+```
+
+**3. Créer l'utilisateur de base de données**
+
+Connectez-vous à MySQL puis exécutez :
+
+```sql
+SOURCE stages_base_user.sql;
+```
+
+**4. Charger l'ORM**
+
+```bash
+sudo php bin/bdd.sh
+```
+
+**5. Insérer les données**
+
+```bash
+bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
+```
+
+> [!INFO]
+> En cas d'erreur lors de cette commande, consultez la section [Sourcing des données](#sourcing-des-données--dépannage)
+
+---
+
+## Configuration JWT
+
+### Linux
+
+#### Activer JWT
+
+Dans `.env.local`, **remplacez** ce bloc :
+
+```dotenv
 ###> lexik/jwt-authentication-bundle ###
 JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
 JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=ef9505d5e08bb528d4a11b819b307a9f20f4bd16e2cb995d316314e2fb17a35b
 ###< lexik/jwt-authentication-bundle ###
 ```
-Par ce bloc :
-```powershell
+
+**Par** (passphrase vide) :
+
+```dotenv
 ###> lexik/jwt-authentication-bundle ###
 JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
 JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
 JWT_PASSPHRASE=
 ###< lexik/jwt-authentication-bundle ###
 ```
-L'étape suivante va être la création du jeu de clés RSA, en créant par la clé privée/publique puis on va extraire la clé publique. Voici la démarche à suivre :
-* Se mettre en utilisateur `sudoer` avec la commande `sudo su`
-* Se placer dans le dossier `./config/` puis écrire ceci :
-```bash 
-mkdir jwt && cd ./jwt
-```
-```bash
-openssl genrsa -out private.pem 2048 
-&& 
-openssl rsa -in ./private.pem -pubout > public.pem
-```
-Les droits sur les clés privées et publiques ne permettent pas à l'utilisateur web d'utiliser ces clés, nous devons donc changer les droits (tout d'abord le groupe puis les droits du groupe)
->[!Warning]
-> Vérifiez que votre utilisateur Apache est bien dans le groupe `www-data` et que ce groupe existe.
+
+#### Générer les clés RSA
+
+Placez-vous dans `./config/` puis créez le dossier JWT :
 
 ```bash
-chgrp -R www-data ../jwt/ 
-&& 
-chmod -R 640 ../jwt/*
+sudo mkdir jwt && cd ./jwt
 ```
 
->[!Warning]
-> Vérifiez que vous avez la même version de MySQL avec la commande (toujours dans l'invite de commande) `mysql --version`
->
-> N'oubliez pas de changer le `<MDP>` avec le mot de passe de l'utilisateur
+Générez les clés privée et publique :
 
-Enfin nous allons insérer notre jeu de données dans notre base de données
 ```bash
- bin/console doctrine:query:sql "$(<../db/realisation/stages_insertInto_v2.sql)"
-``` 
-#### Désactivation du JWT 
-Pour désactiver l'authentification par `JWT`, il faut changer dans le `.env.local` le `APP_ENV=`, dans l'environnement de `dev` l'authentification JWT est `désactivée`, cependant dans l'environnement de `prod` l'authentification JWT est activée.
+sudo openssl genrsa -out private.pem 2048 \
+&& openssl rsa -in ./private.pem -pubout > public.pem
+```
 
-## Apache conf
-Se rendre dans le fichier apache `cd /etc/apache2/`, faire une copie du fichier `apache.conf` avec la commande `sudo cp apache2.conf apache2.conf.bak`.
+Ajustez les droits pour l'utilisateur web :
 
-Une fois la copie faite, il faut l'éditer :
-```bash 
+> [!WARNING]
+> Vérifiez que votre utilisateur Apache appartient bien au groupe `www-data` et que ce groupe existe.
+
+```bash
+chgrp -R www-data ../jwt/ \
+&& chmod -R 640 ../jwt/*
+```
+
+#### Tester la génération d'un JWT
+
+```bash
+php bin/console lexik:jwt:generate-token nicolas.batauld@lycee-basch.fr --env=prod
+```
+
+> Remplacez l'email par un email présent dans votre base de données si nécessaire.
+
+---
+
+### Windows
+
+#### Activer JWT
+
+Même procédure que Linux : dans `.env.local`, videz la `JWT_PASSPHRASE` (voir bloc ci-dessus).
+
+#### Générer les clés RSA
+
+Placez-vous dans `./config/`, créez un dossier `jwt`, puis dans une invite de commande :
+
+```bash
+openssl genrsa -out private.pem 2048 \
+&& openssl rsa -in ./private.pem -pubout > public.pem
+```
+
+> La configuration JWT est terminée sous Windows (pas de gestion des droits de groupe nécessaire).
+
+#### Tester la génération d'un JWT
+
+```bash
+php bin/console lexik:jwt:generate-token nicolas.batauld@lycee-basch.fr --env=prod
+```
+
+---
+
+## Désactivation du JWT
+
+Pour désactiver l'authentification JWT, modifiez `APP_ENV` dans `.env.local` :
+
+| Valeur de `APP_ENV` | Comportement JWT |
+|---------------------|-----------------|
+| `dev` | JWT **désactivé** |
+| `prod` | JWT **activé** |
+
+---
+
+## Configuration Apache
+
+### Linux
+
+Rendez-vous dans le répertoire Apache :
+
+```bash
+cd /etc/apache2/
+```
+
+Faites une sauvegarde du fichier de configuration :
+
+```bash
+sudo cp apache2.conf apache2.conf.bak
+```
+
+Éditez le fichier :
+
+```bash
 sudo nano apache2.conf
 ```
 
-Une fois dans le nano du fichier `.conf`, remplacez le bloc suivant :  
+**Remplacez** ce bloc :
 
-```bash 
-<Directory /var/www/> 
-  Options Indexes FollowSymLinks
-        AllowOverride None
-        Require all granted
+```apache
+<Directory /var/www/>
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
 </Directory>
 ```
-par ce bloc :
 
-```bash
-<Directory /var/www/> 
-  Options Indexes FollowSymLinks
-        AllowOverride None
-        Require all granted
-   CGIPassAuth On
+**Par** :
+
+```apache
+<Directory /var/www/>
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+    CGIPassAuth On
 </Directory>
 ```
-> Redémarrer apache2
 
-## Sourcing des données
-En cas d'erreur lors du sourcing des données, effectuées ces commandes ci dessous : 
+> Redémarrez Apache2 après modification.
+
+---
+
+### Windows
+
+Localisez et sauvegardez votre fichier `apache.conf` ou `httpd.conf`, puis ajoutez la directive suivante :
+
+```apache
+<Directory "C:/xampp/htdocs">
+    # Transmets l'en-tête Authorization au script PHP
+    CGIPassAuth On
+```
+
+Vérifiez ensuite votre fichier `php.ini` situé dans `C:\xampp\php\php.ini` et activez l'extension `sodium` si nécessaire.
+
+> Redémarrez Apache2 après modification.
+
+---
+
+## Sourcing des données — Dépannage
+
+En cas d'erreur lors de l'insertion des données, connectez-vous à MySQL manuellement :
+
 ```bash
-# Connexion a mysql 
 sudo mysql -u root
-``` 
+```
+
+Puis exécutez :
 
 ```sql
--- Sourcing des données
-use bdStages;
-source ./app/db/realisation/stages_insertInto_v2.sql;
+USE bdStages;
+SOURCE ./app/db/realisation/stages_insertInto_v2.sql;
 ```
