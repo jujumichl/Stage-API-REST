@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\Response;
 final class ContactController extends AbstractController
 {
     // Chemin pour voir tous les contacts
@@ -26,7 +26,7 @@ final class ContactController extends AbstractController
             'data' => $lesContacts
         ];
         $serializedResult = $unSerializer->serialize($result, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
-        return new JsonResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($serializedResult, Response::HTTP_OK, [], true);
     }
 
     // Chemin pour voir un contact selon l'ID
@@ -46,7 +46,7 @@ final class ContactController extends AbstractController
              return new JsonResponse([
                  'message' => 'Données erronées',
                  'errors' => $messages
-             ], JsonResponse::HTTP_BAD_REQUEST);
+             ], Response::HTTP_BAD_REQUEST);
          }
          $unContact = $unRepository->find($id);
          if (!$unContact) {
@@ -55,14 +55,14 @@ final class ContactController extends AbstractController
                  'data' => null
              ];
              $serializedResult = $unSerialiseur->serialize($result, 'json');
-             return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
+             return new JSONResponse($serializedResult, Response::HTTP_NOT_FOUND, [], true);
          } else {
              $result = [
                  'message' => 'OK',
                  'data' => $unContact
              ];
              $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
-             return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
+             return new JSONResponse($serializedResult, Response::HTTP_OK, [], true);
          }
      }
 
@@ -85,7 +85,7 @@ final class ContactController extends AbstractController
              return new JsonResponse([
                  'message' => 'Données erronées',
                  'errors' => $messages
-             ], JsonResponse::HTTP_BAD_REQUEST);
+             ], Response::HTTP_BAD_REQUEST);
          }
          $uneOrganisation = $organisationRepository->find($id);
          if (!$uneOrganisation) {
@@ -94,7 +94,7 @@ final class ContactController extends AbstractController
                  'data' => null
              ];
              $serializedResult = $unSerialiseur->serialize($result, 'json');
-             return new JSONResponse($serializedResult, JsonResponse::HTTP_NOT_FOUND, [], true);
+             return new JSONResponse($serializedResult, Response::HTTP_NOT_FOUND, [], true);
          } else {
             $desContacts = $contactRepository->findBy(['organisation' => $uneOrganisation]);
              $result = [
@@ -102,7 +102,7 @@ final class ContactController extends AbstractController
                  'data' => $desContacts
              ];
              $serializedResult = $unSerialiseur->serialize($result, 'json',  [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
-             return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
+             return new JSONResponse($serializedResult, Response::HTTP_OK, [], true);
          }
      }
 
