@@ -24,14 +24,25 @@ final class StagesController extends AbstractController
 {
     /**
      * Get tous les stages
+     * 
+     * Ajout de la recherche par ville, code postal et option
      */
     #[Route('/stages', name: 'stages_get', methods: ['GET'])]
-    public function index(StageRepository $unStageRepository, SerializerInterface $unSerialiseur): JsonResponse
+    public function index(StageRepository $unStageRepository, SerializerInterface $unSerialiseur, request $request): JsonResponse
     {
-        $lesStages = $unStageRepository->findAll();
+        $ville = $request->query->get('ville') ?? '';
+        $cp = $request->query->get('cp') ?? '';
+        $opt = $request->query->get('option') ?? '';
+
+        if (empty($opt) && empty($cp) && empty($ville)){
+            $lesStages = $unStageRepository->findAll();
+        }
+        else {
+            $lesStages = $unStageRepository->findByGetParam($opt, $ville, $cp);
+        }
         $result = [
             'message' => 'OK',
-            'data' => $lesStages
+            'data' => $lesStages, 
         ];
         $serializedResult = $unSerialiseur->serialize($result, 'json');
         return new JSONResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
