@@ -16,6 +16,16 @@ class SpecialiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Specialite::class);
     }
 
+    public function findOneBySigle(string $opt){
+        $query = $this->createQueryBuilder('spe');
+        if (!empty($opt)) {
+            $query->andWhere('spe.sigle = :option')
+                ->setParameter('option', $opt);
+        }
+        return $query ->getQuery()
+                      ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Specialite[] Returns an array of Specialite objects
     //     */

@@ -346,8 +346,8 @@ GET /stages
 ```
 
 ### Paramètres d'URL
-?ville=
-?option=
+?ville=   
+?option= `SLAM | SISR`   
 ?cp=
 ### Réponse
 En cas de succès, retourne [`<200>`](./api.md#codes-status) et la réponse suivante :
@@ -401,27 +401,13 @@ Un objet periode présente les propriétés suivantes :
     "numAnneeFormation": entier,
 }
 ```
-### Requête exemple avec succès - code statut 200
-```shell
-curl --url "http://host/path/stages?ville=chantepie"
-```
-Fournit une réponse http avec code statut 200 et le corps de réponse json suivant :
-```json
-
-```
-
-```shell
-curl --url "http://host/path/stages?cp=35135"
-```
-Fournit une réponse http avec code statut 200 et le corps de réponse json suivant :
-```json
-
-```
-
-```shell
-curl --url "http://host/path/stages?option=SLAM"
-```
-Fournit une réponse http avec code statut 200 et le corps de réponse json suivant :
-```json
-
-```
+### Requêtes exemple 
+| Méthode | Paramètre | Réponse attendue |
+| ------ | ------ | ------ |
+| GET    | ?ville=chantepie | Réponse 200 avec les stages ayant été effectuer dans la ville de chantepie |
+| GET    | ?ville=chantepiee | Réponse 200 avec un tableau vide. |
+| GET    | ?codePostal=35135 | Réponse 200 avec tous les stages. |
+| GET    | ?cp=35135 | Réponse 200 avec les stages ayant été effectuer dans le code postal 35135. |
+| GET    | ?cp=351355 | Réponse 404 car le code postal n'est pas bon. |
+| GET    | ?option=SLAM | Réponse 200 avec les stages ayant été effectué par des élève ayant fait l'option SLAM. |
+| GET    | ?option=SLAMe | Réponse 404 car les option sont connu et définie en bdd. |

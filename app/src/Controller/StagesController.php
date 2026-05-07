@@ -35,7 +35,7 @@ final class StagesController extends AbstractController
         $cp = $request->query->get('cp') ?? '';
         $opt = $request->query->get('option') ?? '';
         $easterEgg = $request->query->get('about') ?? '';
-        $existOpt = $opt !== '' ? $speRepo->findBySigle($opt) : 'SLAM';
+        $existOpt = $opt !== '' ? $speRepo->findOneBySigle($opt) : 'SLAM';
         if (empty($existOpt)) {
             $result = ["message" => "Filtrage impossible", "erreur" => "Option inexistante"];
 
