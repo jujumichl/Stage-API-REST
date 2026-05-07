@@ -252,8 +252,7 @@ sudo mkdir jwt && cd ./jwt
 Générez les clés privée et publique :
 
 ```bash
-sudo openssl genrsa -out private.pem 2048 \
-&& openssl rsa -in ./private.pem -pubout > public.pem
+sudo openssl genrsa -out private.pem 2048 && openssl rsa -in ./private.pem -pubout > public.pem
 ```
 
 Ajustez les droits pour l'utilisateur web :
@@ -262,8 +261,7 @@ Ajustez les droits pour l'utilisateur web :
 > Vérifiez que votre utilisateur Apache appartient bien au groupe `www-data` et que ce groupe existe.
 
 ```bash
-chgrp -R www-data ../jwt/ \
-&& chmod -R 640 ../jwt/*
+chgrp -R www-data ../jwt/ && chmod -R 640 ../jwt/*
 ```
 
 #### Tester la génération d'un JWT
@@ -287,8 +285,7 @@ Même procédure que Linux : dans `.env.local`, videz la `JWT_PASSPHRASE` (voir 
 Placez-vous dans `./config/`, créez un dossier `jwt`, puis dans une invite de commande :
 
 ```bash
-openssl genrsa -out private.pem 2048 \
-&& openssl rsa -in ./private.pem -pubout > public.pem
+openssl genrsa -out private.pem 2048 && openssl rsa -in ./private.pem -pubout > public.pem
 ```
 
 > La configuration JWT est terminée sous Windows (pas de gestion des droits de groupe nécessaire).
