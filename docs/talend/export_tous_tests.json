@@ -4,17 +4,1423 @@
     {
       "entity": {
         "type": "Project",
-        "id": "52764bcb-a786-489d-8196-39e28849bd9e",
+        "id": "dac09a89-c83b-49be-98c5-9f73c0c191fe",
         "name": "ap32-stages-apirest"
       },
       "children": [
         {
           "entity": {
             "type": "Service",
-            "id": "6a4ef6e2-8203-423f-a6ec-1d483d43de58",
-            "name": "GET-Stages"
+            "id": "6b444c5b-dbf7-4b48-943d-eec7ee19816a",
+            "name": "AuthJwt"
           },
           "children": [
+            {
+              "entity": {
+                "type": "Scenario",
+                "description": "",
+                "id": "9b613139-81b1-452b-b8ee-32fc8e2273c0",
+                "name": "Test-auth-JWT"
+              },
+              "children": [
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages/1"
+                    },
+                    "id": "bae02345-daf2-43ba-aac3-ef267d8b4146",
+                    "name": "GET-one-AvecAuthInvalid-JWT",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Accept-Encoding",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer untoken.test.ahah"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "401"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "Invalid JWT Token"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.code",
+                        "value": "401"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages/1"
+                    },
+                    "id": "b78852b3-40ce-4d46-b63a-4efc31b3e404",
+                    "name": "GET-one-AvecAuthInvalid-header",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Accept-Encoding",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer mauvais.eyJpYXQiOjE3NzQzNjE5NTIsImV4cCI6MTc3NDM2NTU1Miwicm9sZXMiOlsiUk9MRV9FVFVESUFOVCJdLCJ1c2VybmFtZSI6Im5pY29sYXMuYmF0YXVsZEBseWNlZS1iYXNjaC5mciJ9.CZc-HkTcI27XcdkUxl3d0vso8JJUSqCZoM_CtHY4Br7bQLqtpsu7HBVQYx7f-HT9JBBVHA3QVKSmftQlysarpVxw5pHX7aRUazlvsg1Jc9clOrDJVQGV2l9Of1URK7uH7WVnvhsKDtZIrqM5wnRQXWjE5hGMvXyGzS4FY995YBOOUhz68zYIJEa32e0utBZJG6tM6zRYC5Nf95p-tinePlgwJ2qrNxMsk7oc1QKCF-B68liN7jrYJpDpkJtniT-C8hQHGLz_ogFeZz1CVmoUdNjWuyImbB4V3K-wJ-Lgt7KKbnvt7xpOcnX6BubllF7m1nC4S1c20BsfmJ_JRh0-_Q"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "401"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "Invalid JWT Token"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.code",
+                        "value": "401"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages/1"
+                    },
+                    "id": "aabf659d-4ccd-4ad7-9f87-8049e77a6906",
+                    "name": "GET-one-AvecAuthInvalid-payload",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Accept-Encoding",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.mauvais.CZc-HkTcI27XcdkUxl3d0vso8JJUSqCZoM_CtHY4Br7bQLqtpsu7HBVQYx7f-HT9JBBVHA3QVKSmftQlysarpVxw5pHX7aRUazlvsg1Jc9clOrDJVQGV2l9Of1URK7uH7WVnvhsKDtZIrqM5wnRQXWjE5hGMvXyGzS4FY995YBOOUhz68zYIJEa32e0utBZJG6tM6zRYC5Nf95p-tinePlgwJ2qrNxMsk7oc1QKCF-B68liN7jrYJpDpkJtniT-C8hQHGLz_ogFeZz1CVmoUdNjWuyImbB4V3K-wJ-Lgt7KKbnvt7xpOcnX6BubllF7m1nC4S1c20BsfmJ_JRh0-_Q"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "401"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "Invalid JWT Token"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.code",
+                        "value": "401"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "retryConfiguration": {
+                      "intervalInSeconds": 10,
+                      "retryCount": 1
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages/1"
+                    },
+                    "id": "f80cda34-1c52-47e0-8e43-905ed8c4dddb",
+                    "name": "GET-one-AvecAuthValid",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Accept-Encoding",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer ${token}"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "OK"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.data",
+                        "value": "4"
+                      },
+                      {
+                        "comparison": "LengthGreaterThanOrEqual",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.data",
+                        "value": "1"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                      "name": "GET"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages/1"
+                    },
+                    "id": "9e866582-82b3-4a96-b66a-f7205e9ae334",
+                    "name": "Get-one-SansAuth",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Accept-Encoding",
+                        "value": "*/*"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "401"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "JWT Token not found"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.code",
+                        "value": "401"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"idEtudiant\":20, \n  \"idOrganisation\": 25,\n  \"idPeriodeStage\": 2,\n  \"descriptifMissions\": \"2\",\n  \"moyens\": \"2\"\n}\n"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages"
+                    },
+                    "id": "acd9f304-1c2f-44ef-838d-2113dfea3f2a",
+                    "name": "Creer-stage-BonFormat-JWT",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer ${token}"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "201"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "Stage d'id"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "créé"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.data._selfLink",
+                        "value": "/fraisforfaits/PTS"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "entity": {
+                    "type": "Request",
+                    "method": {
+                      "requestBody": true,
+                      "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                      "name": "POST"
+                    },
+                    "body": {
+                      "formBody": {
+                        "overrideContentType": true,
+                        "encoding": "application/x-www-form-urlencoded",
+                        "items": []
+                      },
+                      "bodyType": "Text",
+                      "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": 20,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": 1,\n  \"moyens\": \"1\"\n}\n"
+                    },
+                    "uri": {
+                      "query": {
+                        "delimiter": "&",
+                        "items": []
+                      },
+                      "scheme": {
+                        "name": "${'protocol'}"
+                      },
+                      "host": "${'host'}",
+                      "path": "/${'path'}/stages"
+                    },
+                    "id": "2967f648-eea1-4961-a941-63c67dfbecc1",
+                    "name": "Creer-stage-all-bad-id-JWT",
+                    "headers": [
+                      {
+                        "enabled": true,
+                        "name": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "Authorization",
+                        "value": "Bearer ${token}"
+                      }
+                    ],
+                    "assertions": [
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseStatus",
+                        "path": "code",
+                        "value": "400"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseBody",
+                        "path": "content",
+                        "value": "200"
+                      },
+                      {
+                        "comparison": "Contains",
+                        "subject": "ResponseHeader",
+                        "path": "content-type",
+                        "value": "application/json"
+                      },
+                      {
+                        "comparison": "Equals",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.message",
+                        "value": "Données erronées"
+                      },
+                      {
+                        "comparison": "Exists",
+                        "subject": "ResponseJsonBody",
+                        "path": "$.errors",
+                        "value": "Données erronées"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"0123456789\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 4\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "15d39212-f19b-48c3-94eb-7464778ba128",
+                "name": "Ajout_Contact_Correct_Avec_Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"0123456789\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 38\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "b32e0a76-37ab-44a9-be49-183c60447e60",
+                "name": "Ajout_Contact_Id_Orga_Inexistant_Avec_Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "L'identifiant de Organisation est invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierregmail.com\",\n  \"tel\": \"0123456749\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "18c1de3b-3d03-4b6c-a3e9-8c049419fe2d",
+                "name": "Ajout_Contact_Mail_Non_Conforme_Avec_Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"01234kj6749\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "ef67f648-5f34-4cfa-bbe4-64c9f2541c7d",
+                "name": "Ajout_Contact_Tel_Non_Conforme_Avec_Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\":20, \n  \"idOrganisation\": 25,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "cb2a3d4b-46f4-4588-8ce0-b4208d7c6c72",
+                "name": "Creer-stage-BonFormat-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Stage d'id"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "créé"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "/fraisforfaits/PTS"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": 20,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": 1,\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "bf0f9ea1-3608-4a91-8c8c-a92f60f4972f",
+                "name": "Creer-stage-str-descriptifMissions(ex: \"1\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "Données erronées"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": \"A\", \n  \"idOrganisation\": 25,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "7d39aa76-ca19-4fed-9be3-7e244c5b8f90",
+                "name": "Creer-stage-str-idEtudiant(ex: \"A\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors[0]",
+                    "value": "L'identifiant de Etudiant est invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": \"25\",\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "4e5186dd-ea1b-4207-ba25-f88fb3f49166",
+                "name": "Creer-stage-str-idOrganisation(ex: \"20\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Stage d'id"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "créé"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "/fraisforfaits/PTS"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": \"A\",\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "6a44e8fb-d0d5-4b30-8964-2d7ee37f1add",
+                "name": "Creer-stage-str-idOrganisation(ex: \"A\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors[0]",
+                    "value": "L'identifiant de Organisation est invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": 25,\n  \"idPeriodeStage\": \"1\",\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "63ab75d8-a335-4077-abfa-2960422d232d",
+                "name": "Creer-stage-str-idPeriodeStage(ex: \"20\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Stage d'id"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "créé"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "/fraisforfaits/PTS"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": 20,\n  \"idPeriodeStage\": \"A\",\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "9162af58-88bd-46de-9f8e-21fbc61b089f",
+                "name": "Creer-stage-str-idPeriodeStage(ex: \"A\")-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors[0]",
+                    "value": "L'identifiant de Periode Stage est invalide"
+                  }
+                ]
+              }
+            },
             {
               "entity": {
                 "type": "Request",
@@ -41,13 +1447,18 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/10"
                 },
-                "id": "34fc6062-5d25-43e7-8031-f2a4de0ecb38",
-                "name": "GET-one-stage",
+                "id": "0aa89fdb-a088-4bea-a497-3913e50ebc64",
+                "name": "GET-one-stage-Auth",
                 "headers": [
                   {
                     "enabled": true,
                     "name": "Accept-Encoding",
                     "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
                   }
                 ],
                 "assertions": [
@@ -108,20 +1519,814 @@
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data.etudiant",
+                    "path": "$.data.etudiant.id",
                     "value": "200"
                   },
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data.periodeStage",
+                    "path": "$.data.periodeStage.id",
                     "value": "200"
                   },
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data.organisation",
+                    "path": "$.data.organisation.id",
                     "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.competence",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/@/contacts"
+                },
+                "id": "36d59698-a87f-4472-8bfb-927cbc7db1f0",
+                "name": "Get-Contact-Unique-Inexistant-CaractèreSpé-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"idEtudiant\": \"20\", \n  \"idOrganisation\": 25,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": \"1\",\n  \"moyens\": \"1\"\n}\n"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "36fd7f86-9df4-46d2-b0aa-188a93f64f25",
+                "name": "Get-Contact-Unique-Inexistant-Chiffre",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Stage d'id"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "créé"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "/fraisforfaits/PTS"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/155/contacts"
+                },
+                "id": "3d8b0d83-875f-405a-8b6a-2d8d1b8adf6a",
+                "name": "Get-Contact-Unique-Inexistant-Chiffre-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/AAB/contacts"
+                },
+                "id": "85b53813-1ba2-4146-a738-31e4d857d5bd",
+                "name": "Get-Contact-Unique-Inexistant-Lettres-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts"
+                },
+                "id": "1c7de3fe-9338-4e3e-901d-57251586d573",
+                "name": "Get-Contacts-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts/6"
+                },
+                "id": "b2641666-c3cb-4d7e-b80d-5fd6aacc7fbf",
+                "name": "Get-Contacts-by-id-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/1/contacts"
+                },
+                "id": "22b984cd-06d3-457e-bb9a-9d9e509f17a6",
+                "name": "Get-Contacts-by-id-organisation-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations"
+                },
+                "id": "3e3002ec-5d0a-4328-911a-193ff01b66e4",
+                "name": "Get-Organisation-Tous-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/@"
+                },
+                "id": "9c4d100a-4283-409c-8fbf-d4a0ed32af1c",
+                "name": "Get-Organisation-Unique-Inexistant-CaractèreSpé-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/155"
+                },
+                "id": "130a3591-2107-47f0-9223-8de3c284755e",
+                "name": "Get-Organisation-Unique-Inexistant-Chiffre-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/1"
+                },
+                "id": "fbc1c5d1-4729-4002-8b0f-7c3936948d80",
+                "name": "Get-Organisation-Unique-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
                   }
                 ]
               }
@@ -152,13 +2357,18 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "29ae9156-ef96-4309-89a8-d0fc83c866ba",
-                "name": "Get-Tous-stages",
+                "id": "38aa92e9-ca2b-4a48-98b7-753c958a982e",
+                "name": "Get-Tous-stages-Auth",
                 "headers": [
                   {
                     "enabled": true,
                     "name": "Accept-Encoding",
                     "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
                   }
                 ],
                 "assertions": [
@@ -219,19 +2429,25 @@
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data[9].etudiant",
+                    "path": "$.data[9].etudiant.id",
                     "value": "200"
                   },
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data[9].periodeStage",
+                    "path": "$.data[9].periodeStage.id",
                     "value": "200"
                   },
                   {
                     "comparison": "Exists",
                     "subject": "ResponseJsonBody",
-                    "path": "$.data[9].organisation",
+                    "path": "$.data[9].organisation.id",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].competence",
                     "value": "200"
                   }
                 ]
@@ -263,13 +2479,18 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/0"
                 },
-                "id": "d13f5923-33c8-4d4c-8085-7b56393823fd",
-                "name": "Get-one-stage-doesn't-exist",
+                "id": "f0894684-8947-4a83-ae2e-7ec1700e808f",
+                "name": "Get-one-stage-doesn't-exist-Auth",
                 "headers": [
                   {
                     "enabled": true,
                     "name": "Accept-Encoding",
                     "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
                   }
                 ],
                 "assertions": [
@@ -326,8 +2547,698 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages/a"
                 },
-                "id": "7a75c84f-cf0f-4812-abb2-56f7114821b0",
+                "id": "01bf8944-4132-4144-a6e4-253404984164",
                 "name": "Get-stage-with-bad-parameter",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages/a"
+                },
+                "id": "1371d512-2094-4a15-9447-35a0ab542d4f",
+                "name": "Get-stage-with-bad-parameter-Auth",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Id de ressource invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{ \n  \"cp\": \"35000\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/5"
+                },
+                "id": "cddc61a7-6204-4007-8802-3ceeaa471334",
+                "name": "Modifier-Id-Organisation-Existant-CP-Invalide-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Les données à modifier sont erronées"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.erreurs",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.erreurs",
+                    "value": "0"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{ \n  \"ville\": \"Rennes\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/5"
+                },
+                "id": "5e990274-3442-4bad-b24a-4e73a3ca363d",
+                "name": "Modifier-Id-Organisation-Existant-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Organisation d'id 5 a été modifiée"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{ \n \"ville\": \"Nantes Cedex\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisations/56"
+                },
+                "id": "e8bd0059-cda4-4e3b-8599-01e97a3abc8b",
+                "name": "Modifier-Id-Organisation-Inexistante-JWT",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "*/*"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data._selfLink",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"login\": \"nicolas.batauld@lycee-basch.fr\",\n  \"password\": \"passe\"\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/login"
+                },
+                "description": "",
+                "id": "61eab4cc-4ae0-4cd4-854b-dd80a7e3d5a5",
+                "name": "login-nicolas",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.token",
+                    "value": "Identifiants invalides."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "e8fcc7d3-2f83-49fd-bdb8-7ba38b343979",
+            "name": "Contacts-sans-Auth"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"0123456789\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 4\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "ebc39cd7-b1a7-473d-a46e-45bcf9555b81",
+                "name": "Ajout_Contact_Correct",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "201"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"0123456789\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 38\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "6ef5a151-cdad-493f-9b1c-2653d7582c56",
+                "name": "Ajout_Contact_Id_Orga_Inexistant",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.errors",
+                    "value": "L'identifiant de Organisation est invalide"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierregmail.com\",\n  \"tel\": \"0123456749\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "34d2fe2a-95be-41a4-bcd5-3af7409598cc",
+                "name": "Ajout_Contact_Mail_Non_Conforme",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"civilite\": \"Mr\",\n  \"prenom\": \"Jean\",\n  \"nom\": \"Eude\",\n  \"email\": \"jean.pierre@gmail.com\",\n  \"tel\": \"01234kj6749\",\n  \"fonction\": \"Dirigeant\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contact"
+                },
+                "id": "8b946801-9f63-4c56-8bc4-19d577dde1e0",
+                "name": "Ajout_Contact_Tel_Non_Conforme",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/@/contacts"
+                },
+                "id": "7d578482-67db-45fc-b005-ac8578785091",
+                "name": "Get-Contact-Unique-Inexistant-CaractèreSpé",
                 "headers": [
                   {
                     "enabled": true,
@@ -358,21 +3269,17 @@
                     "comparison": "Equals",
                     "subject": "ResponseJsonBody",
                     "path": "$.message",
-                    "value": "Id de ressource invalide"
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
                   }
                 ]
               }
-            }
-          ]
-        },
-        {
-          "entity": {
-            "type": "Service",
-            "description": "",
-            "id": "41e802a6-3a06-4c77-bae7-6c70ae0e450a",
-            "name": "Get-Organisation"
-          },
-          "children": [
+            },
             {
               "entity": {
                 "type": "Request",
@@ -397,9 +3304,295 @@
                     "name": "${'protocole'}"
                   },
                   "host": "${'host'}",
+                  "path": "/${'path'}/organisation/155/contacts"
+                },
+                "id": "ccce4004-2e4e-4c55-ae85-454fc9173c5f",
+                "name": "Get-Contact-Unique-Inexistant-Chiffre",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "404"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Ressource inexistante"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/AAB/contacts"
+                },
+                "id": "af195dcf-ef0f-4011-a3d6-79aebfa0a5d8",
+                "name": "Get-Contact-Unique-Inexistant-Lettres",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "400"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "Données erronées"
+                  },
+                  {
+                    "comparison": "DoesNotExist",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts"
+                },
+                "id": "86727397-6e6e-4ced-998a-a32a189eb04b",
+                "name": "Get-Contacts",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/contacts/6"
+                },
+                "id": "a0e819ce-4084-47cb-ac5f-69f7d0408135",
+                "name": "Get-Contacts-by-id",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"prenom\": \"Michel\",\n  \"nom\": \"Sardou\",\n  \"email\": \"michel.sardou@irisa.fr\",\n  \"tel\": \"0299445566\",\n  \"fonction\": \"DRH\",\n  \"organisation_id\": 5\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocole'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/organisation/2/contacts"
+                },
+                "id": "7c4f3978-8ec1-4a65-ad78-2bd843c9dec7",
+                "name": "Get-Contacts-by-id-organisation",
+                "headers": [],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "description": "",
+            "id": "9106ef5a-9258-4599-9f41-68f2a2a03b69",
+            "name": "Organisations-sans-Auth"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
                   "path": "/${'path'}/organisations"
                 },
-                "id": "07d8d001-76a3-4888-9e16-d11c8013cf77",
+                "id": "4fa4759e-c42c-4afd-9c4a-160e7f2732f9",
                 "name": "Get-Organisation-Tous",
                 "headers": [
                   {
@@ -469,12 +3662,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocole'}"
+                    "name": "${'protocol'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/organisations/5"
                 },
-                "id": "0e7972b8-f261-47f5-b4b7-313e2adb667b",
+                "id": "4f56145f-82f6-47b4-a1f0-554afe3760ba",
                 "name": "Get-Organisation-Unique",
                 "headers": [
                   {
@@ -544,12 +3737,12 @@
                     "items": []
                   },
                   "scheme": {
-                    "name": "${'protocole'}"
+                    "name": "${'protocol'}"
                   },
                   "host": "${'host'}",
                   "path": "/${'path'}/organisations/1"
                 },
-                "id": "6dc92d95-08d3-443f-8cc3-27f71dca1021",
+                "id": "3ca2c13a-2c86-472a-bd41-6a4befbd285b",
                 "name": "Get-Organisation-Unique-Existant",
                 "headers": [
                   {
@@ -624,7 +3817,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/organisations/@"
                 },
-                "id": "8e245a16-9539-46f1-8b80-e88e0426ba48",
+                "id": "c3be49b2-5d51-48d1-9892-e88a4c677596",
                 "name": "Get-Organisation-Unique-Inexistant-CaractèreSpé",
                 "headers": [
                   {
@@ -693,7 +3886,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/organisations/155"
                 },
-                "id": "390f3a44-ec8e-437d-b083-07279a4374de",
+                "id": "b38a7136-ab44-4e1e-9ff8-ef3e7056976a",
                 "name": "Get-Organisation-Unique-Inexistant-Chiffre",
                 "headers": [
                   {
@@ -762,7 +3955,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/organisations/AAB"
                 },
-                "id": "366a7880-cfc3-4b1d-b11a-c36d11371e09",
+                "id": "62d0ff47-0e6f-4805-a825-33c30513656d",
                 "name": "Get-Organisation-Unique-Inexistant-Lettres",
                 "headers": [
                   {
@@ -810,8 +4003,8 @@
         {
           "entity": {
             "type": "Service",
-            "id": "e830cd95-14c2-4997-b06c-0a01c58bb724",
-            "name": "POST-Stages"
+            "id": "9cf21968-b765-4d0f-8ac8-68f283fd588f",
+            "name": "Stages-sans-Auth"
           },
           "children": [
             {
@@ -842,7 +4035,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "1deb4a22-f3f3-41a7-a8bc-362b261d4b75",
+                "id": "eb4adc2d-f138-4fac-8d67-543f34308132",
                 "name": "Creer-stage-BonFormat",
                 "headers": [
                   {
@@ -924,84 +4117,8 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "a6706b32-ff1b-4deb-887a-6c767eb3197f",
-                "name": "Creer-stage-all-bad-id",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Données erronées"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.errors",
-                    "value": "Données erronées"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-                  "name": "POST"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{\n  \"idEtudiant\": 20, \n  \"idOrganisation\": 20,\n  \"idPeriodeStage\": 1,\n  \"descriptifMissions\": 1,\n  \"moyens\": \"1\"\n}\n"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocol'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/stages"
-                },
-                "id": "1a5fbc77-07ea-4e7f-bb32-dd8780397948",
-                "name": "Creer-stage-str-descriptifMissions(ex: \"1\").",
+                "id": "2353e7e4-0af2-452a-a038-0afbc877f02c",
+                "name": "Creer-stage-str-descriptifMissions(ex: \"1\")",
                 "headers": [
                   {
                     "enabled": true,
@@ -1076,7 +4193,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "87bd3eaf-bf2b-4fff-8422-22b678aa8ed6",
+                "id": "266bb42d-acc2-4414-bfb7-2625d0ae08a5",
                 "name": "Creer-stage-str-idEtudiant(ex: \"20\")",
                 "headers": [
                   {
@@ -1158,7 +4275,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "d27ceca4-14f5-47d5-87e1-57ab7402438a",
+                "id": "43e505e0-75f4-4748-87ed-896d755ddca5",
                 "name": "Creer-stage-str-idEtudiant(ex: \"A\")",
                 "headers": [
                   {
@@ -1240,7 +4357,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "9da95004-3cd2-4b0d-951c-44a05efab5bb",
+                "id": "225779ba-c8c1-4bb4-bc62-831237929ad7",
                 "name": "Creer-stage-str-idOrganisation(ex: \"20\")",
                 "headers": [
                   {
@@ -1322,7 +4439,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "ca92d6e1-1189-4be0-8c4f-b668b357ba00",
+                "id": "94afafaf-d729-4b69-890b-abaf2e28e85c",
                 "name": "Creer-stage-str-idOrganisation(ex: \"A\")",
                 "headers": [
                   {
@@ -1404,7 +4521,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "6489e7ec-9ca4-464b-82c5-ad16b36f41e5",
+                "id": "ee643565-3cbe-4cf4-8f6e-01322c41ccc5",
                 "name": "Creer-stage-str-idPeriodeStage(ex: \"20\")",
                 "headers": [
                   {
@@ -1486,7 +4603,7 @@
                   "host": "${'host'}",
                   "path": "/${'path'}/stages"
                 },
-                "id": "5c5ed4b3-03b9-4657-b7dd-42e5211af964",
+                "id": "15aa54dd-766f-4364-b01f-966c82790fc5",
                 "name": "Creer-stage-str-idPeriodeStage(ex: \"A\")",
                 "headers": [
                   {
@@ -1539,99 +4656,13 @@
                   }
                 ]
               }
-            }
-          ]
-        },
-        {
-          "entity": {
-            "type": "Service",
-            "id": "d1487c0e-c799-400d-9eb8-f4433daea473",
-            "name": "Put-Organisation"
-          },
-          "children": [
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"ville\": \"Rennes\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "af9e04fa-4cea-4d34-99fe-118305af4ae5",
-                "name": "Modifier-Id-Organisation-Existant",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Organisation d'id 5 a été modifiée"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
             },
             {
               "entity": {
                 "type": "Request",
                 "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
                 },
                 "body": {
                   "formBody": {
@@ -1639,698 +4670,7 @@
                     "encoding": "application/x-www-form-urlencoded",
                     "items": []
                   },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"cp\": \"35000\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "cde05620-365d-4784-80a4-c9c394fb4f6a",
-                "name": "Modifier-Id-Organisation-Existant-CP-Invalide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Les données à modifier sont erronées"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.erreurs",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "LengthGreaterThanOrEqual",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.erreurs",
-                    "value": "0"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"codePostal\": \"35000\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "d9a8dd09-e414-46f8-bbe8-a4c81e30f33f",
-                "name": "Modifier-Id-Organisation-Existant-CP-Valide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Organisation d'id 5 a été modifiée"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"email\": \"entreprise.validegmail.com\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "6492bd9b-b266-43b3-a6a9-abc3fbc84270",
-                "name": "Modifier-Id-Organisation-Existant-Mail-Invalide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Ressource invalide"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"email\": \"entreprise.valide@gmail.com\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "5d99eed4-2ce3-42c8-a691-2e683932054f",
-                "name": "Modifier-Id-Organisation-Existant-Mail-Valide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Organisation d'id 5 a été modifiée"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"tel\": \"0213543g16\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "6713b969-12d9-4da9-bac0-37841caa7f54",
-                "name": "Modifier-Id-Organisation-Existant-Tel-Invalide (1 lettre)",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Ressource invalide"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"tel\": \"021354316\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "8568b837-f406-48e2-8aec-318afc53b73f",
-                "name": "Modifier-Id-Organisation-Existant-Tel-Invalide (9 caractères)",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Ressource invalide"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"tel\": \"0213543516\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "4bc23249-4c35-4ff5-8d33-f75a281a599a",
-                "name": "Modifier-Id-Organisation-Existant-Tel-Valide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Organisation d'id 5 a été modifiée"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"urlSiteWeb\": \"hts://www.google.com/\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "e7e76a61-8208-4e78-be77-284debe0b4f8",
-                "name": "Modifier-Id-Organisation-Existant-URL-Invalide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Ressource invalide"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n  \"urlSiteWeb\": \"https://www.google.com/\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocole'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "eb069098-7b74-468e-bba0-fa78b8111c6e",
-                "name": "Modifier-Id-Organisation-Existant-URL-Valide",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Organisation d'id 5 a été modifiée"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n \"ville\": \"Nantes Cedex\"\n}"
+                  "bodyType": "Text"
                 },
                 "uri": {
                   "query": {
@@ -2341,19 +4681,248 @@
                     "name": "${'protocol'}"
                   },
                   "host": "${'host'}",
-                  "path": "/${'path'}/organisations/56"
+                  "path": "/${'path'}/stages/10"
                 },
-                "id": "c7847712-19ea-432b-8217-f6bc3c5cfc3a",
-                "name": "Modifier-Id-Organisation-Inexistante",
+                "id": "92273225-23a5-4393-86ca-9baa956951d4",
+                "name": "GET-one-stage",
                 "headers": [
                   {
                     "enabled": true,
-                    "name": "Content-Type",
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
                     "value": "application/json"
                   },
                   {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.id",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.descriptifMissions",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.moyens",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.numeroEtudiant",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.idPeriodeStage",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.numeroOrganisation",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data.competence",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages"
+                },
+                "id": "07012305-1f6c-404e-99b8-adb6f34cc696",
+                "name": "Get-Tous-stages",
+                "headers": [
+                  {
                     "enabled": true,
-                    "name": "Accept",
+                    "name": "Accept-Encoding",
+                    "value": "*/*"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Contains",
+                    "subject": "ResponseHeader",
+                    "path": "content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Equals",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.message",
+                    "value": "OK"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "4"
+                  },
+                  {
+                    "comparison": "LengthGreaterThanOrEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data",
+                    "value": "1"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].id",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].descriptifMissions",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].moyens",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].numeroEtudiant",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].idPeriodeStage",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].numeroOrganisation",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.data[9].competence",
+                    "value": "200"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${'protocol'}"
+                  },
+                  "host": "${'host'}",
+                  "path": "/${'path'}/stages/0"
+                },
+                "id": "aaac0d7d-48d7-49f7-8490-961e81eb78c0",
+                "name": "Get-one-stage-doesn't-exist",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept-Encoding",
                     "value": "*/*"
                   }
                 ],
@@ -2381,12 +4950,6 @@
                     "subject": "ResponseJsonBody",
                     "path": "$.message",
                     "value": "Ressource inexistante"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
                   }
                 ]
               }
@@ -2395,9 +4958,8 @@
               "entity": {
                 "type": "Request",
                 "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
                 },
                 "body": {
                   "formBody": {
@@ -2405,8 +4967,7 @@
                     "encoding": "application/x-www-form-urlencoded",
                     "items": []
                   },
-                  "bodyType": "Text",
-                  "textBody": "{ \n \"PDG\": \"Luka Moisseron\"\n}"
+                  "bodyType": "Text"
                 },
                 "uri": {
                   "query": {
@@ -2417,19 +4978,14 @@
                     "name": "${'protocol'}"
                   },
                   "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
+                  "path": "/${'path'}/stages/a"
                 },
-                "id": "c628246b-54d2-4399-8cd4-c6a875ac85d6",
-                "name": "Modifier-key-PDG-Organisation-Inexistante",
+                "id": "4a516130-bac4-4f90-a876-5c406446ddf4",
+                "name": "Get-stage-with-bad-parameter",
                 "headers": [
                   {
                     "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
+                    "name": "Accept-Encoding",
                     "value": "*/*"
                   }
                 ],
@@ -2456,165 +5012,7 @@
                     "comparison": "Equals",
                     "subject": "ResponseJsonBody",
                     "path": "$.message",
-                    "value": "Les données à modifier sont erronées"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n \"ru\": \"Luka Moisseron boulvard\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocol'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "f9541d46-b26e-4211-989c-bfb04594826d",
-                "name": "Modifier-key-Ru-Organisation-Inexistante",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Les données à modifier sont erronées"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
-                  }
-                ]
-              }
-            },
-            {
-              "entity": {
-                "type": "Request",
-                "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
-                  "name": "PUT"
-                },
-                "body": {
-                  "formBody": {
-                    "overrideContentType": true,
-                    "encoding": "application/x-www-form-urlencoded",
-                    "items": []
-                  },
-                  "bodyType": "Text",
-                  "textBody": "{ \n \"vile\": \"Luka Moisseron city\"\n}"
-                },
-                "uri": {
-                  "query": {
-                    "delimiter": "&",
-                    "items": []
-                  },
-                  "scheme": {
-                    "name": "${'protocol'}"
-                  },
-                  "host": "${'host'}",
-                  "path": "/${'path'}/organisations/5"
-                },
-                "id": "e5773f10-ca25-4eae-ab4b-8fc81a6958e1",
-                "name": "Modifier-key-Vile-Organisation-Inexistante",
-                "headers": [
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Accept",
-                    "value": "*/*"
-                  }
-                ],
-                "assertions": [
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseStatus",
-                    "path": "code",
-                    "value": "400"
-                  },
-                  {
-                    "comparison": "Exists",
-                    "subject": "ResponseBody",
-                    "path": "content",
-                    "value": "200"
-                  },
-                  {
-                    "comparison": "Contains",
-                    "subject": "ResponseHeader",
-                    "path": "content-type",
-                    "value": "application/json"
-                  },
-                  {
-                    "comparison": "Equals",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.message",
-                    "value": "Les données à modifier sont erronées"
-                  },
-                  {
-                    "comparison": "DoesNotExist",
-                    "subject": "ResponseJsonBody",
-                    "path": "$.data._selfLink",
-                    "value": "200"
+                    "value": "Id de ressource invalide"
                   }
                 ]
               }

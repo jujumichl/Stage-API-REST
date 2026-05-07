@@ -112,23 +112,22 @@ final class ContactController extends AbstractController
     }
 
     private function test($errors)
-{
-    $messages = [];
-    foreach ($errors as $error) {
-        $messages[] = [$error->getPropertyPath() => $error->getMessage()];
+    {
+        $messages = [];
+        foreach ($errors as $error) {
+            $messages[] = [$error->getPropertyPath() => $error->getMessage()];
+        }
+        return $messages;
     }
-    return $messages;
-}
 
     #[Route('/contact', name: 'app_contact_add', methods: ['POST'])]
     public function addContact(
-        SerializerInterface $unSerialiseur, 
-        EntityManagerInterface $em, 
-        UrlGeneratorInterface $unUrlGenerateur, 
-        Request $request, 
+        SerializerInterface $unSerialiseur,
+        EntityManagerInterface $em,
+        UrlGeneratorInterface $unUrlGenerateur,
+        Request $request,
         ValidatorInterface $unValidator
-        ): JsonResponse
-    {
+    ): JsonResponse {
         $contenu = $request->getContent();
         try {
             $data = $request->toArray();
@@ -161,35 +160,48 @@ final class ContactController extends AbstractController
 
                     return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
                 } else {
-                    $unContact->setCivilite($Repo['civilite']);
-                    $unContact->setPrenom($Repo['prenom']);
-                    $unContact->setNom($Repo['nom']);
-                    $unContact->setEmail($Repo['email']);
-                    $unContact->setTel($Repo['tel']);
-                    $unContact->setFonction($Repo['fonction']);
-                    $unContact->setNumeroOrganisation($Repo['Organisation']);
-                    
-                    $em->persist($unContact);
-
-                    $em->flush();
-                    $location = $unUrlGenerateur->generate(
-                        'app_contact_add',
-                        ['id' => $unContact->getId()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    );
-                    $id = $unContact->getId();
-                    $result = [
-                        "message" => "Contact d'id {$id} créé",
-                        "data" => [
-                            "_selfLink" => $location
-                        ]
+                    $constraintMail = [
+                        new Assert\Regex(['pattern' => '/^[a-z\d]+(?:[._-][a-z\d]+)*@(?:[a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z]{2,63}$/']),
                     ];
-                    return new JsonResponse($result, JsonResponse::HTTP_CREATED, [], false);
+                    $errorsMail = $unValidator->validate($Repo['email'], $constraintMail);
+                    $constraintTel = [
+                        new Assert\Regex(['pattern' => '/^\+?\d{0,3}[-.\s]?(?:\(\d{1,4}\)|\d{1,4})?(?:[-.\s]?\d{1,4}){1,6}$/']),
+                    ];
+                    $errorsTel = $unValidator->validate($Repo['tel'], $constraintTel);
+                    if (($Repo['civilite'] == "Mr" || $Repo['civilite'] == "Mme") && $errorsMail->count() == 0 && $errorsTel->count() == 0) {
+                        $unContact->setCivilite($Repo['civilite']);
+                        $unContact->setPrenom($Repo['prenom']);
+                        $unContact->setNom($Repo['nom']);
+                        $unContact->setEmail($Repo['email']);
+                        $unContact->setTel($Repo['tel']);
+                        $unContact->setFonction($Repo['fonction']);
+                        $unContact->setNumeroOrganisation($Repo['Organisation']);
+
+                        $em->persist($unContact);
+
+                        $em->flush();
+                        $location = $unUrlGenerateur->generate(
+                            'app_contact_add',
+                            ['id' => $unContact->getId()],
+                            UrlGeneratorInterface::ABSOLUTE_URL
+                        );
+                        $id = $unContact->getId();
+                        $result = [
+                            "message" => "Contact d'id {$id} créé",
+                            "data" => [
+                                "_selfLink" => $location
+                            ]
+                        ];
+                        return new JsonResponse($result, JsonResponse::HTTP_CREATED, [], false);
+                    } else {
+                        $result = ["message" => "Données erronées"];
+                        return new JsonResponse($result, JsonResponse::HTTP_BAD_REQUEST, [], false);
+                    }
                 }
             } else {
                 if ($Repo["Organisation"] == null) {
                     $messages[] = "L'identifiant de Organisation est invalide";
-                } 
+                }
 
                 $result = ["message" => "Données erronées", "errors" => $messages];
 
