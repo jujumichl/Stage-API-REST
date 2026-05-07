@@ -23,17 +23,7 @@ class Stage
     #[Groups(['stages.get'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['stages.get'])]
-    private ?Etudiant $etudiant = null;
-
-    #[Groups(['stages.get'])]
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Periode $periode = null;
-
-    #[Assert\NotBlank]
+        #[Assert\NotBlank]
     #[Assert\Type('string')]
     #[Groups(['stages.get'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -45,7 +35,16 @@ class Stage
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $moyens = null;
 
-    
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
+    private ?Etudiant $etudiant = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
+    private ?Periode $periode = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['stages.get'])]
@@ -55,14 +54,13 @@ class Stage
      * @var Collection<int, Competence>
      */
     #[ORM\ManyToMany(targetEntity: Competence::class)]
+    #[Groups(['stages.get'])]
     private Collection $competence;
 
     public function __construct()
     {
         $this->competence = new ArrayCollection();
     }
-
-
 
     public function getId(): ?int
     {
@@ -105,14 +103,14 @@ class Stage
         return $this;
     }
 
-    public function getPeriodeStage(): ?Periode
+    public function getPeriode(): ?Periode
     {
         return $this->periode;
     }
 
-    public function setPeriodeStage(?Periode $periodeStage): static
+    public function setPeriode(?Periode $periode): static
     {
-        $this->periode = $periodeStage;
+        $this->periode = $periode;
 
         return $this;
     }

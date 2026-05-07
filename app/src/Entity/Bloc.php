@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BlocRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: BlocRepository::class)]
 class Bloc
@@ -13,16 +12,20 @@ class Bloc
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['stages.get'])]
     private ?string $code = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
     private ?Specialite $specialite = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['stages.get'])]
     private ?string $intitule = null;
 
 

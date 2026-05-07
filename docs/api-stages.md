@@ -10,10 +10,10 @@ Aucun
 ### Réponse
 En cas de succès, retourne [`<200>`](./api.md#codes-status) et la réponse suivante :
 
-| Propriété                | Type           | Description                   |
-|--------------------------|----------------|-------------------------------|
-| `message`                | string         | Ok                            |
-| `data`                   | Object array   | Tableau d'objets stage        |
+| Propriété | Type         | Description            |
+| --------- | ------------ | ---------------------- |
+| `message` | string       | Ok                     |
+| `data`    | Object array | Tableau d'objets stage |
 
 Les stages seront triés de manière croissante sur l'id.
 
@@ -38,7 +38,6 @@ Un objet etudiant présente les propriétés suivantes :
     "rue": string,
     "codePostal": string,
     "ville": string,
-    "tel": string,
     "email": string,
     "specialite": object specialite
 }
@@ -140,17 +139,17 @@ GET /stages/:id
 ```
 
 ### Paramètres
-| Propriété                | Type           | Description                   |
-|--------------------------|----------------|-------------------------------|
-| :id                      | entier         | id du stage                   |
+| Propriété | Type   | Description |
+| --------- | ------ | ----------- |
+| :id       | entier | id du stage |
 
 ### Réponse
 En cas de succès, retourne [`<200>`](./api.md#codes-status) et la réponse suivante :
 
-| Propriété                | Type           | Description                   |
-|--------------------------|----------------|-------------------------------|
-| `message`                | string         | Ok                            |
-| `data`                   | Object         | Objet stage                   |
+| Propriété | Type   | Description |
+| --------- | ------ | ----------- |
+| `message` | string | Ok          |
+| `data`    | Object | Objet stage |
 
 Un objet stage présente les propriétés suivantes :
 ```json
@@ -240,29 +239,29 @@ POST /stages
 ### Paramètres d'URL
 Aucun
 ### Données du payload - passées dans le corps de la requête au format JSON
-| Propriété           | Type          | Description                                                      |
-|---------------------|---------------|------------------------------------------------------------------|
-| descriptifMission   | string        | descriptif de la mission                                         |
-| moyens              | string        | moyens : équipements, systèmes, méthodes, outils                 |
-| idEtudiant          | integer       | numéro de l'étudiant effectuant le stage                         |
-| idOrganisation      | integer       | numéro de l'organisation accueillant l'étudiant                  |
-| idPeriodeStage      | integer       | id de la période du stage                                        |
+| Propriété         | Type    | Description                                      |
+| ----------------- | ------- | ------------------------------------------------ |
+| descriptifMission | string  | descriptif de la mission                         |
+| moyens            | string  | moyens : équipements, systèmes, méthodes, outils |
+| idEtudiant        | integer | numéro de l'étudiant effectuant le stage         |
+| idOrganisation    | integer | numéro de l'organisation accueillant l'étudiant  |
+| idPeriodeStage    | integer | id de la période du stage                        |
 
 Toutes les propriétés ci-dessus doivent être présentes dans le payload.
 
 ### Réponse
 En cas de succès, retourne [`<200>`](./api.md#codes-status) et la réponse suivante :
 
-| Propriété                | Type           | Description                                         |
-|--------------------------|----------------|-----------------------------------------------------|
-| `message`                | string         | Stage d'id x a été créé                             |
-| `data`                   | Object data    | Fournit des données sur la nouvelle ressource       |
+| Propriété | Type        | Description                                   |
+| --------- | ----------- | --------------------------------------------- |
+| `message` | string      | Stage d'id x a été créé                       |
+| `data`    | Object data | Fournit des données sur la nouvelle ressource |
 
 L'objet data comporte les propriétés suivantes :
 
-| Propriété                | Type           | Description                                         |
-|--------------------------|----------------|-----------------------------------------------------|
-| `_selfLink`              | string         | Lien absolu vers la nouvelle ressource              |
+| Propriété   | Type   | Description                            |
+| ----------- | ------ | -------------------------------------- |
+| `_selfLink` | string | Lien absolu vers la nouvelle ressource |
 
 ### Requête exemple avec succès - code statut 201
 ```shell
@@ -338,3 +337,77 @@ Fournit une réponse http avec code statut 400 et le corps de réponse json suiv
     "erreurs" : ["Période de stage inexistante"]
 }
 ```
+
+
+## Obtenir tous les stages avec filtrage
+### URI
+```plaintext
+GET /stages
+```
+
+### Paramètres d'URL
+?ville=   
+?option= `SLAM | SISR`   
+?cp=
+### Réponse
+En cas de succès, retourne [`<200>`](./api.md#codes-status) et la réponse suivante :
+
+| Propriété | Type         | Description            |
+| --------- | ------------ | ---------------------- |
+| `message` | string       | Ok                     |
+| `data`    | Object array | Tableau d'objets stage |
+
+Les stages seront triés de manière croissante sur l'id.
+
+Chaque objet stage présente les propriétés suivantes :
+```json
+{
+    "id": entier,
+    "descriptifMission": string,
+    "moyens": string,
+    "etudiant": object etudiant,
+    "periode": object periode,
+    "organisation": object organisation
+}
+```
+Un objet organisation est visible [ici](./api-organisations.md#un-objet-organisation).
+
+Un objet etudiant présente les propriétés suivantes :
+```json
+{
+    "id": entier,
+    "nom": string,
+    "rue": string,
+    "codePostal": string,
+    "ville": string,
+    "email": string,
+    "specialite": object specialite
+}
+```
+Un objet specialite présente les propriétés suivantes :
+```json
+{
+    "id": string,
+    "sigle": string,
+    "intitule": string,
+}
+```
+Un objet periode présente les propriétés suivantes :
+```json
+{
+    "id": entier,
+    "dateDebut": string,
+    "dateFin": string,
+    "numAnneeFormation": entier,
+}
+```
+### Requêtes exemple 
+| Méthode | Paramètre | Réponse attendue |
+| ------ | ------ | ------ |
+| GET    | ?ville=chantepie | Réponse 200 avec les stages ayant été effectuer dans la ville de chantepie |
+| GET    | ?ville=chantepiee | Réponse 200 avec un tableau vide. |
+| GET    | ?codePostal=35135 | Réponse 200 avec tous les stages. |
+| GET    | ?cp=35135 | Réponse 200 avec les stages ayant été effectuer dans le code postal 35135. |
+| GET    | ?cp=351355 | Réponse 404 car le code postal n'est pas bon. |
+| GET    | ?option=SLAM | Réponse 200 avec les stages ayant été effectué par des élève ayant fait l'option SLAM. |
+| GET    | ?option=SLAMe | Réponse 404 car les option sont connu et définie en bdd. |

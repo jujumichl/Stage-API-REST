@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints As Assert;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
 class Organisation
@@ -17,35 +18,44 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length: 8)]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['stages.get'])]
     private ?string $nom = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['stages.get'])]
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['stages.get'])]
     private ?string $rue = null;
 
     #[ORM\Column(length: 6, nullable: true)]
     #[Assert\Regex(['pattern' => '/^[0-9]{5}$/'])]
+    #[Groups(['stages.get'])]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['stages.get'])]
     private ?string $ville = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\Regex(['pattern' => '/^[0-9]{10}$/', 'message' => "L'id doit comporter 10 chiffres (Veuillez ne pas mettre d'espaces)."])]
+    #[Groups(['stages.get'])]
     private ?string $tel = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Email(['message' => "Le mail n'est pas valide."])]
+    #[Groups(['stages.get'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Url(['message' => "L'URL n'est pas valide."])]
+    #[Groups(['stages.get'])]
     private ?string $urlSiteWeb = null;
 
 

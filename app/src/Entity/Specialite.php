@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SpecialiteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: SpecialiteRepository::class)]
 class Specialite
@@ -11,12 +12,15 @@ class Specialite
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:'NONE')]
     #[ORM\Column(length:1)]
+    #[Groups(['stages.get'])]
     private ?string $id = null;
 
     #[ORM\Column(length: 4, nullable: true)]
+    #[Groups(['stages.get'])]
     private ?string $sigle = null;
 
     #[ORM\Column(length: 60)]
+    #[Groups(['stages.get'])]
     private ?string $intitule = null;
 
     public function getId(): ?string
