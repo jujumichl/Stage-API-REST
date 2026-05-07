@@ -6,6 +6,7 @@ use App\Repository\PeriodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: PeriodeRepository::class)]
 class Periode
@@ -15,15 +16,19 @@ class Periode
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:4)]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['stages.get'])]
     private ?\DateTime $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['stages.get'])]
     private ?\DateTime $dateFin = null;
 
     #[ORM\Column(nullable: true, length:4)]
+    #[Groups(['stages.get'])]
     private ?int $numAnneeForm = null;
 
     public function getId(): ?int

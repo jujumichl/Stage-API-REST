@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\EtudiantRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
@@ -18,39 +18,42 @@ class Etudiant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(length:8)]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['stages.get'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['stages.get'])]
+    private ?string $rue = null;
+
+    #[ORM\Column(length: 6)]
+    #[Groups(['stages.get'])]
+    private ?string $codePostal = null;
+
+    #[ORM\Column(length: 100)]
+    #[Groups(['stages.get'])]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 100)]
+    #[Groups(['stages.get'])]
     private ?string $email = null;
 
     #[ORM\Column(length:4)]
     private ?int $anneePromo = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Specialite $specialite = null;
-
     
     #[ORM\Column(length: 100)]
     private ?string $mdp = null;
     
-    #[ORM\Column(length: 100)]
-    private ?string $rue = null;
-
-    #[ORM\Column(length: 6)]
-    private ?string $codePostal = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $ville = null;
-
-
-
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
+    private ?Specialite $specialite = null;
 
     public function getId(): ?int
     {

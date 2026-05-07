@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CompetenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CompetenceRepository::class)]
 class Competence
@@ -11,16 +12,20 @@ class Competence
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['stages.get'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['stages.get'])]
     private ?Bloc $bloc = null;
 
     #[ORM\Column]
+    #[Groups(['stages.get'])]
     private ?int $numeroDansBloc = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['stages.get'])]
     private ?string $libelle = null;
 
     public function getId(): ?int
