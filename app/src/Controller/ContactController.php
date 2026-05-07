@@ -33,7 +33,7 @@ final class ContactController extends AbstractController
             'data' => $lesContacts
         ];
         $serializedResult = $unSerializer->serialize($result, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['civilite']]);
-        return new JsonResponse($serializedResult, Response::HTTP_OK, [], true);
+        return new JsonResponse($serializedResult, JsonResponse::HTTP_OK, [], true);
     }
 
     // Chemin pour voir un contact selon l'ID
